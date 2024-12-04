@@ -1,8 +1,10 @@
 # Vi
-It's a simple automation framework
-Make sure you added /usr/sbin to the $PATH
+It's a simple automation framework.
 
-# Requirements in Client
+# Issues I faced in Linux
+Make sure you added /usr/sbin to the $PATH.
+
+# Requirements in Client [Linux]
 nmcli
 ifconfig
 iw
