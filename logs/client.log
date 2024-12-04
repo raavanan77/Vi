@@ -436,3 +436,212 @@ INFO:__main__:Execute Command : sudo nmcli dev disconnect wlan0 >> /dev/null && 
 INFO:__main__:Output : SUCCESS
 
 INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 12:36:38] "POST /jsonrpc HTTP/1.1" 200 -
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.16.0.172:4001/ (Press CTRL+C to quit)
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output :         00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  84      ▂▄▆█  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:08:09] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output :         00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  82      ▂▄▆█  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:09:06] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output :         00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  77      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:09:28] "POST /jsonrpc HTTP/1.1" 200 -
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.16.0.172:4001/ (Press CTRL+C to quit)
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output :         00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  72      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:41:02] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:41:08] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  70      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:07] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:08] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:08] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlp4s0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:08] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlp4s0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:08] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  67      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:52] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:54] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:55] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlp4s0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:55] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlp4s0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:42:55] "POST /jsonrpc HTTP/1.1" 200 -
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.16.0.172:4001/ (Press CTRL+C to quit)
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  66      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:28] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:30] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:30] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlp4s0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:30] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlp4s0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:30] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  80      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:57] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:58] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:58] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlp4s0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:58] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlp4s0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:43:58] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  67      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:17] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:20] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:20] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlp4s0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:20] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlp4s0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:20] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  67      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:31] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:31] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlan0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:34] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlp4s0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:34] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : *       00:03:7F:85:61:62  Sanity_AXG20_OPEN_ALDER  Infra  1     270 Mbit/s  77      ▂▄▆_  --        
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:41] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : [2K
+Device 'wlan0' successfully activated with '454c85f2-e0dc-4176-a53a-9cced8cc8fb2'.
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:42] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : Sanity_AXG20_OPEN_ALDER
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:42] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlan0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:44] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlan0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 17:44:44] "POST /jsonrpc HTTP/1.1" 200 -
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.16.0.172:4001/ (Press CTRL+C to quit)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4001
+ * Running on http://172.16.0.120:4001
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:__main__:Execute Command : nmcli radio wifi off >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:__main__:Execute Command : nmcli radio wifi on >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : 
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev wifi connect Sanity_AXG20_OPEN_ALDER
+INFO:__main__:Output : 
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : nmcli dev wifi | grep Sanity_AXG20_OPEN_ALDER | awk '{print $3}'
+INFO:__main__:Output : 
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : ping -I wlan0 -c 3 192.168.1.1 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo nmcli dev disconnect wlan0 >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:werkzeug:127.0.0.1 - - [04/Dec/2024 18:53:29] "POST /jsonrpc HTTP/1.1" 200 -

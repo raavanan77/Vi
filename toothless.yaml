@@ -35,12 +35,12 @@ testStep:
     method: execute_serial_command
     param: 
       - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.AccessPoint.1.Security.ModeEnabled string None"]
+      - "dmcli eRT setv Device.WiFi.AccessPoint.1.Security.ModeEnabled string None"
   step8:
     method: execute_serial_command
     param: 
       - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting bool 1"]
+      - "dmcli eRT setv Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting bool 1"
   step9:
     method: exesleep
     param: [30]

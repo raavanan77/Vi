@@ -1,17 +1,24 @@
 import arklib
 from parser import yamlParser
 
-def dyno_vars():
+temp_vars = {}
+
+def dyno_vars(key,value):
     #create variables to use in between the test steps
-    
-    pass
+    temp_vars[key] = value
+    print(temp_vars)
 
 
 def main():
-    getDetails = yamlParser()
+    getDetails = yamlParser(filename='firewall_ping.yaml')
     for test in getDetails['testStep']:
         func = getattr(arklib,getDetails['testStep'][test]['method'])
-        print(func(*getDetails['testStep'][test]['param']))
-    pass
+        result = func(*getDetails['testStep'][test]['param'])
+        print(getDetails['testStep'][test]['description'],result)
+        try:
+            if getDetails['testStep'][test]['savevar']:
+                dyno_vars(getDetails['testStep'][test]['savevar'],result)
+        except:
+            pass
 
 main()
