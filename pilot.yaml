@@ -1,0 +1,6 @@
+testcaseName: Pilot77
+deviceType: Generic
+testStep:
+  step1:
+    method: requestjson
+    param: ['http://0.0.0.0:4001/jsonrpc','disconnect_wifi',['wlan0']]
