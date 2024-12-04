@@ -28,10 +28,10 @@ def execute_command(command):
 
 def refresh_wifinw():
     #Refresh wifi
-    wifioff = execute_command("nmcli radio wifi off {exe_status}")
-    wifion = execute_command("nmcli radio wifi on {exe_status}")
+    wifioff = execute_command(f"nmcli radio wifi off {exe_status}")
+    wifion = execute_command(f"nmcli radio wifi on {exe_status}")
 
-    if wifioff == "SUCCESS\n" and wifion == "SUCCESS\n":
+    if wifioff == "SUCCESS" and wifion == "SUCCESS":
         return "SUCCESS"
     else:
         return "FAILED"

@@ -26,17 +26,23 @@ testStep:
     method: execute_serial_command
     param: ["/dev/ttyUSB3","dmcli eRT setv Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting bool 1"]
   step9:
-    method: execute_client_cmd
-    param: ["http://0.0.0.0:4001/jsonrpc",refresh_wifinw,[]]
+    method: exesleep
+    param: [30]
   step10:
     method: execute_client_cmd
-    param: ["http://0.0.0.0:4001/jsonrpc",is_ssid_available,["Sanity_AXG20_OPEN_ALDER"]]
+    param: ["http://0.0.0.0:4001/jsonrpc",refresh_wifinw,[]]
   step11:
     method: execute_client_cmd
-    param: ["http://0.0.0.0:4001/jsonrpc",connect_to_ssid,["Sanity_AXG20_OPEN_ALDER"]]
+    param: ["http://0.0.0.0:4001/jsonrpc",is_ssid_available,["Sanity_AXG20_OPEN_ALDER"]]
   step12:
     method: execute_client_cmd
-    param: ["http://0.0.0.0:4001/jsonrpc",get_connected_ssid,["Sanity_AXG20_OPEN_ALDER"]]
+    param: ["http://0.0.0.0:4001/jsonrpc",connect_to_ssid,["Sanity_AXG20_OPEN_ALDER"]]
   step13:
+    method: execute_client_cmd
+    param: ["http://0.0.0.0:4001/jsonrpc",get_connected_ssid,["Sanity_AXG20_OPEN_ALDER"]]
+  step14:
+    method: execute_client_cmd
+    param: ["http://0.0.0.0:4001/jsonrpc",ping,['wlp4s0','192.168.1.1']]
+  step15:
     method: execute_client_cmd
     param: ["http://0.0.0.0:4001/jsonrpc",disconnect_wifi,['wlp4s0']]

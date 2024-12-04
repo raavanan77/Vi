@@ -1,10 +1,10 @@
 import serial
 import paramiko
 import requests
+from time import sleep
 
 def requestjson(url,method,param : list) -> list:
     # Send Json request to given client and returns output
-    print(type(param))
     payload = {
         "method": method,
         "params": param,
@@ -34,8 +34,6 @@ def vssh(IP,user,password,command):
     
 def execute_serial_command(port,command):
     if port != None:
-        print("serial")
-        # Open serial port
         output = ''
         ser = serial.Serial(port, 115200, timeout=1)
         #Executing command in DUT
@@ -61,3 +59,7 @@ def execute_multiple_command(port,command : list) -> list:
 def set_and_verify_multiple_cmds(port,command: list) -> list:
     for cmd in command:
         execute_serial_command(port,cmd)
+
+def exesleep(time):
+    #Holds execution for given time
+    sleep(time)
