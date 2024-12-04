@@ -3,4 +3,4 @@ deviceType: Generic
 testStep:
   step1:
     method: execute_serial_command
-    param: ["/dev/ttyUSB1","dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1"]
+    param: ["/dev/ttyUSB2","dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1"]
