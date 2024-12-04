@@ -43,9 +43,9 @@ def execute_serial_command(port,command):
         ser.write(b'\r')
         ext = ser.readlines()#.decode('iso-8859-1').strip()
         for _ in ext:
-            output += _.decode().strip('\n')
+            output += _.decode()
         ser.close()
-        return ext
+        return output
     
 def get_and_verify(method,port,command,value):
     response = execute_serial_command(port,command)
