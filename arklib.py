@@ -21,7 +21,7 @@ def createSSHClient(server, port, user,password):
     client.connect(server, port, user, password)
     return client
     
-def zsconnect(IP,user,password,command):
+def vssh(IP,user,password,command):
     if IP != None:
         #Executes given command in device via ssh
         try:
@@ -32,7 +32,7 @@ def zsconnect(IP,user,password,command):
         ssh.close()
         return stdin,stdout.readlines(),stderr
     
-def zserial(port,command):
+def execute_serial_command(port,command):
     if port != None:
         print("serial")
         # Open serial port
@@ -45,12 +45,19 @@ def zserial(port,command):
         for _ in ext:
             output += _.decode().strip('\n')
         ser.close()
-        ser.close()
         return ext
     
 def get_and_verify(method,port,command,value):
-    response = zserial(port,command)
+    response = execute_serial_command(port,command)
     if method == "contains" and value in response:
         return "Pass"
     elif method == "equals" and value == response:
         return "Pass"
+
+def execute_multiple_command(port,command : list) -> list:
+    for cmd in command:
+        execute_serial_command(port,cmd)
+
+def set_and_verify_multiple_cmds(port,command: list) -> list:
+    for cmd in command:
+        execute_serial_command(port,cmd)

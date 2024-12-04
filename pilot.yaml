@@ -2,5 +2,5 @@ testcaseName: Pilot77
 deviceType: Generic
 testStep:
   step1:
-    method: requestjson
-    param: ['http://0.0.0.0:4001/jsonrpc','disconnect_wifi',['wlan0']]
+    method: execute_serial_command
+    param: ["/dev/ttyUSB1","dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1"]
