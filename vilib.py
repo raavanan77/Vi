@@ -2,6 +2,14 @@ import serial
 import paramiko
 import requests
 from time import sleep
+import re
+
+def regex_prompt(prompt_text):
+    if '#' in prompt_text:
+        pattern = pattern = re.compile(r"^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+:.*[#]", re.IGNORECASE)
+    elif '$' in prompt_text:
+        pattern = re.compile(r"^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+:.*[$]", re.IGNORECASE)
+    return pattern.match(prompt_text)
 
 def execute_client_cmd(url,method,param : list) -> list:
     # Send Json request to given client and returns output
@@ -60,11 +68,9 @@ def get_and_verify(method,port,command,value):
 def execute_multiple_command(port,command : list) -> list:
     for cmd in command:
         execute_serial_command(port,cmd)
-
-def set_and_verify_multiple_cmds(port,command: list) -> list:
-    for cmd in command:
-        execute_serial_command(port,cmd)
+        sleep(2)
 
 def exesleep(time):
     #Holds execution for given time
     sleep(time)
+    return 'OK'

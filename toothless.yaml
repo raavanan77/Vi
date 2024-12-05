@@ -1,82 +1,129 @@
-testcaseName: Pilot77
-deviceType: RDK-B
+testcaseName: Open_Source_Regression_11AXGHE20_OPEN_2G
+deviceName: Marina
+deviceType: PRPL
 testStep:
   step1:
     method: execute_serial_command
+    description: "Enabling Radio 2G"
     param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1"
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.Radio.1.Enable=1"
   step2:
     method: execute_serial_command
+    description: "Enable 2G AccessPoint"
     param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.Radio.1.OperatingStandards string b,g,n,ax"
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.AccessPoint.1.Enable=1"
   step3:
     method: execute_serial_command
+    description: "Enable 2G WIFI SSID"
     param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.Radio.1.OperatingChannelBandwidth string 20MHz"
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.SSID.1.Enable=1"
   step4:
     method: execute_serial_command
+    description: "Set WIFI SSID for 2G Radio"
     param: 
-      - /dev/ttyUSB3
-      - dmcli eRT setv Device.WiFi.Radio.1.Channel uint 1"
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.SSID.1.SSID=PRPL_SANITY_2G"
   step5:
     method: execute_serial_command
+    description: "Restarting prplmesh_whm service"
     param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.SSID.1.SSID string Sanity_AXG20_OPEN_ALDER"
+      - /dev/ttyACM2
+      - "/etc/init.d/prplmesh_whm restart >> /dev/null"
   step6:
     method: execute_serial_command
+    description: "Set Security Mode to None"
     param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.AccessPoint.1.SSIDAdvertisementEnabled bool 1"
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.AccessPoint.1.Security.ModeEnabled=None"
   step7:
     method: execute_serial_command
+    description: "Set Operating Standard to ax"
     param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.AccessPoint.1.Security.ModeEnabled string None"
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.Radio.1.OperatingStandards=ax"
   step8:
     method: execute_serial_command
-    param: 
-      - /dev/ttyUSB3
-      - "dmcli eRT setv Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting bool 1"
+    description: "Set Channel bandwidth to 20MHz"
+    param:
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.Radio.1.OperatingChannelBandwidth=20MHz"
   step9:
-    method: exesleep
-    param: [30]
+    method: get_and_verify
+    description: "Get and Verify Channel bandwidth"
+    param:
+      - contains 
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.Radio.1.OperatingChannelBandwidth? | grep = | cut -d '=' -f2"
+      - 20MHz
   step10:
-    method: execute_client_cmd
-    param: 
-      - "http://0.0.0.0:4001/jsonrpc"
-      - refresh_wifinw
-      - []
+    method: get_and_verify
+    description: "Get and Verify Operating Standard"
+    param:
+      - contains
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.Radio.1.OperatingStandards? | grep = | cut -d '=' -f2"
+      - ax
   step11:
-    method: execute_client_cmd
+    method: get_and_verify
+    description: "Get and Verify Security"
     param:
-      - "http://0.0.0.0:4001/jsonrpc",
-      - is_ssid_available
-      - [Sanity_AXG20_OPEN_ALDER"]
+      - contains 
+      - /dev/ttyACM2
+      - "ubus-cli -a Device.WiFi.AccessPoint.1.Security.ModeEnabled? | grep = | cut -d '=' -f2"
+      - None
   step12:
-    method: execute_client_cmd
-    param:
-      - "http://0.0.0.0:4001/jsonrpc"
-      - connect_to_ssid
-      - ["Sanity_AXG20_OPEN_ALDER"]
+    method: exesleep
+    description: "Sleep for 10 seconds"
+    param: [10]
   step13:
     method: execute_client_cmd
+    description: "Refresh wifi in client"
     param: 
-      - "http://0.0.0.0:4001/jsonrpc"
-      - get_connected_ssid
-      - ["Sanity_AXG20_OPEN_ALDER"]
+      - "http://172.16.0.212:4001/jsonrpc"
+      - refresh_wifinw
+      - []
   step14:
     method: execute_client_cmd
+    description: "Scan for WIFI SSID in Client"
     param:
-      - "http://0.0.0.0:4001/jsonrpc"
-      - ping
-      - ['wlp4s0','192.168.1.1']
+      - "http://172.16.0.212:4001/jsonrpc"
+      - is_ssid_available
+      - ["PRPL_SANITY_2G"]
   step15:
     method: execute_client_cmd
+    description: "Connect client to SSID"
     param:
-      - "http://0.0.0.0:4001/jsonrpc"
+      - "http://172.16.0.212:4001/jsonrpc"
+      - connect_to_ssid
+      - ["PRPL_SANITY_2G"]
+  step16:
+    method: execute_client_cmd
+    description: "Getting Connected SSID from Client"
+    param: 
+      - "http://172.16.0.212:4001/jsonrpc"
+      - get_connected_ssid
+      - ["PRPL_SANITY_2G"]
+  step17:
+    method: execute_client_cmd
+    description: "Ping to DUT"
+    param:
+      - "http://172.16.0.212:4001/jsonrpc"
+      - ping
+      - ['wlp3s0','192.168.1.1']
+  step18:
+    method: execute_client_cmd
+    description: "Disconnect wifi"
+    param:
+      - "http://172.16.0.212:4001/jsonrpc"
       - disconnect_wifi
-      - ['wlp4s0']
+      - ['wlp3s0']
+  step19:
+    method: execute_client_cmd
+    description: "Delete saved wifi ssid profile"
+    param:
+      - "http://172.16.0.212:4001/jsonrpc"
+      - delete_saved_wifi_connections
+      - ["PRPL_SANITY_2G"]

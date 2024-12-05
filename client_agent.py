@@ -3,6 +3,7 @@ from werkzeug.wrappers import Request, Response
 from werkzeug.serving import run_simple
 import logging
 from jsonrpc import JSONRPCResponseManager, dispatcher
+from time import sleep
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,7 @@ def refresh_wifinw():
     #Refresh wifi
     wifioff = execute_command(f"nmcli radio wifi off {exe_status}")
     wifion = execute_command(f"nmcli radio wifi on {exe_status}")
+    sleep(7)
 
     if wifioff == "SUCCESS" and wifion == "SUCCESS":
         return "SUCCESS"
@@ -129,8 +131,9 @@ def curl(iface,addr):
     response = execute_command(f"curl --interface {iface} -o /dev/null --silent --head --write-out \'{httpcode}\' {addr}")
     return response
 
-def delete_saved_wifi_connections():
-    pass
+def delete_saved_wifi_connections(ssid):
+    delete = execute_command(f"sudo rm /etc/NetworkManager/system-connections/{ssid} {exe_status}")
+    return delete
 
 @Request.application
 def application(request):
