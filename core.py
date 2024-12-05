@@ -4,8 +4,10 @@ import logging
 import datetime
 import os
 
+print("HI")
 
-getDetails = yamlParser(filename='Open_Source_Regression_11AXGHE20_OPEN_2G.yaml')
+
+getDetails = yamlParser()
 
 logger = logging.getLogger(__name__)
 
