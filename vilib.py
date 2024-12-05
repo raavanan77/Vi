@@ -18,7 +18,7 @@ def createSSHClient(server, user,password,port):
     client = paramiko.SSHClient()
     client.load_system_host_keys()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(server, port, user, password)
+    client.connect(server, port, user, password,timeout=10)
     return client
     
 def vssh(IP,user,password,command):
@@ -31,15 +31,15 @@ def vssh(IP,user,password,command):
             print("SSH connection failed")
         stdin,stdout,stderr = ssh.exec_command(command)
         ssh.close()
-        return stdout.readlines()[-1].strip('\n')
+        return stdout.readlines()#[-1].strip('\n')
     
 def execute_serial_command(port,command):
     if port != None:
         output = ''
-        ser = serial.Serial(port, 115200, timeout=1)
+        ser = serial.Serial(port, 115200, timeout=1.5)
         #Executing command in DUT
         ser.write(command.encode('utf-8'))
-        ser.reset_output_buffer()
+        #ser.reset_output_buffer()
         ser.write(b'\r')
         ext = ser.readlines()#.decode('iso-8859-1').strip()
         for _ in ext:
@@ -47,8 +47,9 @@ def execute_serial_command(port,command):
         ser.close()
         return output
     
-def get_and_verify(method,ip,user,passwd,command,value):
-    response = vssh(ip,user,passwd,command)
+def get_and_verify(method,port,command,value):
+    response = execute_serial_command(port,command)
+    response= response.strip(command)
     if method == "contains" and value in response:
         return "Pass"
     elif method == "equals" and value == response:

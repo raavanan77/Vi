@@ -1,4 +1,4 @@
-import arklib
+import vilib
 from parser import yamlParser
 
 temp_vars = {}
@@ -12,7 +12,7 @@ def dyno_vars(key,value):
 def main():
     getDetails = yamlParser(filename='firewall_ping.yaml')
     for test in getDetails['testStep']:
-        func = getattr(arklib,getDetails['testStep'][test]['method'])
+        func = getattr(vilib,getDetails['testStep'][test]['method'])
         result = func(*getDetails['testStep'][test]['param'])
         print(getDetails['testStep'][test]['description'],result)
         try:

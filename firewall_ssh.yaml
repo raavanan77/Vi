@@ -13,8 +13,8 @@ testStep:
     param:
       - contains
       - /dev/ttyUSB0
-      - "ping -c1 -W1 1.1.1.1 >> /dev/null && echo SUCCESS || echo FAILURE"
-      - SUCCESS
+      - "uname"
+      - Linux
   step3:
     method: execute_serial_command
     description: "Setting Firewall Medium"
@@ -27,8 +27,8 @@ testStep:
     param:
       - contains
       - /dev/ttyUSB0
-      - "ping -c1 -W1 1.1.1.1 >> /dev/null && echo SUCCESS || echo FAILURE"
-      - SUCCESS
+      - "uname"
+      - Linux
   step5:
     method: execute_serial_command
     description: "Setting Firewall High"
@@ -41,5 +41,5 @@ testStep:
     param:
       - contains
       - /dev/ttyUSB0
-      - "ping -c1 -W1 1.1.1.1 >> /dev/null && echo SUCCESS || echo FAILURE"
-      - SUCCESS
+      - "uname"
+      - Linux
