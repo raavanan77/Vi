@@ -7,4 +7,4 @@ testStep:
       - contains
       - /dev/ttyUSB3
       - systemctl status rdkbLogMonitor.service | grep Active
-      - running
+      - (active)
