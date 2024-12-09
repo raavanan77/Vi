@@ -135,6 +135,13 @@ def delete_saved_wifi_connections(ssid):
     delete = execute_command(f"sudo rm /etc/NetworkManager/system-connections/{ssid} {exe_status}")
     return delete
 
+def refresh_interface(iface):
+    if bring_interface_down(iface) == "SUCCESS" and bring_interface_up(iface) == "SUCCESS":
+        print(1)
+        return "SUCCESS"
+    else:
+        return "FAILURE"
+
 @Request.application
 def application(request):
     # Dispatcher is dictionary {<method_name>: callable}
@@ -159,6 +166,8 @@ def application(request):
     response = JSONRPCResponseManager.handle(
         request.data, dispatcher)
     return Response(response.json, mimetype='application/json')
+
+refresh_interface("eth0")
 
 if __name__ == '__main__':
     run_simple('0.0.0.0', 4001, application)

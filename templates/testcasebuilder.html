@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E2E Script Gen</title>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/static/light.css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+        .container {
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between left and right sections */
+        }
+
+        input[type="text"], select {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: calc(30% - 10px); /* Adjust width to fit layout */
+        }
+
+        button {
+            padding: 8px 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .checkbox-container {
+            margin: 10px 0;
+            display: block;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+        .checkbox-group {
+            display: inline-block; /* Allows grouping of radio buttons */
+            margin-right: 20px; /* Space between groups if needed */
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="checkbox"]:checked {
+            accent-color: #4CAF50; /* Modern browsers */
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/">
+        <h1>Enter Test Case Name</h1>
+        <div class="input-group">
+            <input type="text" name="test_case" placeholder="Test Case Name" required>
+        </div>
+        <h1>Enter Device Model</h1>
+        <div class="input-group">
+            <input type="text" name="cradio" id="radioid" placeholder="Ex: openWrt, RDKB, PRPL" required oninput="saveradio(this)">
+        </div>
+        <h1>Configure Test Step</h1>
+        <div id="data-model-container">
+            <div class="input-group">
+                <h3>Step 1</h3>
+                <input type="text" name="data_model" placeholder="Data Model Name" required oninput="checkDataModel(this)">
+                <select name="datatype" aria-label="Data Type">
+                    <option value="uint">UINT</option>
+                    <option value="int">INT</option>
+                    <option value="bool">BOOL</option>
+                    <option value="string">STRING</option>
+                </select>
+                <input type="text" name="dvalue" placeholder="Value" required>
+                <button type="button" class="remove-button" onclick="removeInput(this)">X</button>
+            </div>
+        </div>
+        <button type="button" id="add-data-model-button">Add Another Data Model</button>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        let radioValue;
+
+        document.getElementById('add-data-model-button').onclick = function() {
+            var container = document.getElementById('data-model-container');
+            var newInput = document.createElement('div');
+            newInput.className = 'input-group';
+            newInput.innerHTML = `
+                <input type="text" name="data_model" placeholder="Data Model Name" required oninput="checkDataModel(this)">
+                <select name="datatype" aria-label="Data Type">
+                    <option value="uint">UINT</option>
+                    <option value="int">INT</option>
+                    <option value="bool">BOOL</option>
+                    <option value="string">STRING</option>
+                </select>
+                <input type="text" name="dvalue" placeholder="Value" required>
+                <button type="button" class="remove-button" onclick="removeInput(this)">X</button>
+            `;
+            container.appendChild(newInput);
+        };
+
+        function removeInput(button) {
+            var inputGroup = button.parentElement;
+            inputGroup.remove();
+        }
+
+        function saveradio() {
+            const radioid = document.getElementById("radioid")
+            radioValue = radioid.value;
+        }
+
+        function checkDataModel(input) {
+            const inputGroup = input.parentElement;
+            const dvalueInput = inputGroup.querySelector('input[name="dvalue"]');
+            const dtype = inputGroup.querySelector('select[name="datatype"]')
+
+            if (input.value.trim().includes('SSID')) {
+                dvalueInput.value = '{tdkbE2EUtility.ssid_' + radioValue + 'hz_name}'; // Set the constant value for WIFI SSID
+                dtype.value = 'string'; // set the constant value for SSID Datatype
+                dvalueInput.readOnly = true; // Lock the input field
+                dtype.readOnly = true;
+            }
+            else if (input.value.trim().includes('KeyPassphrase')) {
+                dvalueInput.value = '{tdkbE2EUtility.ssid_' + radioValue + 'hz_pwd}'; // Set the constant value FOR WIFI Security Key
+                dtype.value = 'string'; // set the constant value for Security Key Datatype
+                dvalueInput.readOnly = true; // Lock the input field
+                dtype.readOnly = true;
+            }
+            else {
+                dvalueInput.value = ''; // Clear the field if it's not ssid
+                dvalueInput.readOnly = false; // Allow editing again
+            }
+        }
+        jQuery(function() {
+            $(".e2eFuncCollection").sortable({});
+            jQuery('li', jQuery('.e2eFuncCollection')).draggable({
+                'connectToSortable': '.e2eFuncCollection',
+                'cancel': 'a.ui-icon',
+                'revert': 'invalid',
+                'containment': 'document',
+                'cursor': 'move'
+            });
+        });
+    </script>
+</body>
+</html>

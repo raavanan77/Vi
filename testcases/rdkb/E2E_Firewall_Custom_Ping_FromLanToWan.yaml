@@ -1,0 +1,16 @@
+testcaseName: E2E_Firewall_Custom_Ping_FromLanToWan
+deviceType: RDK-B
+testStep:
+  step1:
+    method: execute_serial_command
+    param: ["RDP442","dmcli eRT setv Device.X_CISCO_COM_Security.Firewall.FirewallLevel string Custom"]
+  step2:
+    method: get_and_verify
+    param: ["RDP442","dmcli eRT getv Device.X_CISCO_COM_Security.Firewall.FirewallLevel"]
+  step9:
+    method: exesleep
+    param: [10]
+  step14:
+    method: get_ipv4addr
+    param: ["LAN_LINUX_CLIENT",get_ipv4addr,['enx00e04c203248']]
+
