@@ -1,10 +1,12 @@
 testcaseName: "Is_LogMonitor_Service_Running"
-deviceType: RDKB
+
+deviceType: AP
+operatingSystem: RDKB
 testStep:
   step1:
     method: get_and_verify
     param: 
       - contains
-      - /dev/ttyUSB3
+      - ALDER_001
       - systemctl status rdkbLogMonitor.service | grep Active
       - (active)

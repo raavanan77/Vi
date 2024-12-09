@@ -3,11 +3,9 @@ from parser import yamlParser
 import logging
 import datetime
 import os
+from dbhandler import getdeviceDetails
 
-print("HI")
-
-
-getDetails = yamlParser()
+getDetails = yamlParser(filename='/home/vignesh/Vi/testcases/rdkb/pilot.yaml')
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +30,12 @@ def dyno_vars(key,value):
 def main():
     for test in getDetails['testStep']:
         func = getattr(vilib,getDetails['testStep'][test]['method'])
+        try:
+            device = getDetails['testStep'][test]['param'][0]
+            device = getdeviceDetails(device)
+            getDetails['testStep'][test]['param'][0] = device[1]
+        except:
+            pass
         result = func(*getDetails['testStep'][test]['param'])
         logger.info(f"{getDetails['testStep'][test]['description']} : {result}")
         try:
