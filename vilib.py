@@ -1,5 +1,5 @@
 import serial
-import paramiko
+import asyncssh
 import requests
 from time import sleep
 import re
@@ -21,25 +21,18 @@ def execute_client_cmd(url,method,param : list) -> list:
     }
     response = requests.post(url, json=payload).json()
     return (response['result'])
-
-def createSSHClient(server, user,password,port):
-    client = paramiko.SSHClient()
-    client.load_system_host_keys()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(server, port, user, password,timeout=10)
-    return client
     
-def vssh(IP,user,password,command):
-    if IP != None:
-        ssh =''
-        #Executes given command in device via ssh
-        try:
-            ssh = createSSHClient(IP,user,password,port="22")
-        except:
-            print("SSH connection failed")
-        stdin,stdout,stderr = ssh.exec_command(command)
-        ssh.close()
-        return stdout.readlines()#[-1].strip('\n')
+async def execute_ssh_command(IP,user,password,command,port='22'):
+    try:
+        async with asyncssh.connect(host=IP,username=user,password=password,port=port,known_hosts=None) as ssh:
+            result = await ssh.run(command)
+            if result.stdout:
+                return result.stdout
+            else:
+                return result.stderr
+    except asyncssh.Error as e:
+        print("SSH connection failed : ",e)
+
     
 def execute_serial_command(port,command):
     if port != None:
@@ -49,7 +42,7 @@ def execute_serial_command(port,command):
         ser.write(command.encode('utf-8'))
         #ser.reset_output_buffer()
         ser.write(b'\r')
-        ext = ser.readlines()#.decode('iso-8859-1').strip()
+        ext = ser.readlines()       #.decode('iso-8859-1').strip()
         for _ in ext:
             output += _.decode()
         ser.close()
@@ -74,3 +67,6 @@ def exesleep(time):
     #Holds execution for given time
     sleep(time)
     return 'OK'
+
+#loop = asyncio.get_event_loop()
+#print(loop.run_until_complete(execute_ssh_command('172.16.0.172','vignesh','7733','sudo docker ps')))

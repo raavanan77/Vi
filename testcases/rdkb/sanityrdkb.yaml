@@ -3,28 +3,28 @@ deviceType: RDK-B
 testStep:
   step1:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1"]
   step2:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.Radio.1.OperatingStandards string b,g,n,ax"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.Radio.1.OperatingStandards string b,g,n,ax"]
   step3:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.Radio.1.OperatingChannelBandwidth string 20MHz"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.Radio.1.OperatingChannelBandwidth string 20MHz"]
   step4:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.Radio.1.Channel uint 1"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.Radio.1.Channel uint 1"]
   step5:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.SSID.1.SSID string Sanity_AXG20_OPEN_ALDER"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.SSID.1.SSID string Sanity_AXG20_OPEN_ALDER"]
   step6:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.AccessPoint.1.SSIDAdvertisementEnabled bool 1"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.AccessPoint.1.SSIDAdvertisementEnabled bool 1"]
   step7:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.AccessPoint.1.Security.ModeEnabled string None"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.AccessPoint.1.Security.ModeEnabled string None"]
   step8:
     method: execute_serial_command
-    param: ["RDPxxx","dmcli eRT setv Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting bool 1"]
+    param: ["DUT","dmcli eRT setv Device.WiFi.Radio.1.X_CISCO_COM_ApplySetting bool 1"]
   step9:
     method: exesleep
     param: [30]

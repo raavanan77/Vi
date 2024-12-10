@@ -1,4 +1,5 @@
 testcaseName: "Is_LogMonitor_Service_Running"
+platform: rdkb
 deviceType: RDKB
 testStep:
   step1:

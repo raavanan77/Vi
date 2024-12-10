@@ -29,12 +29,12 @@ def editDetails(deviceName):
     connection.execute('''ALTER''')
     db.commit()
 
-def addTestcase(testcaseName,testcaseDetails):
-    db = connectdb()
-    try:
-        connection = db.cursor()
-        connection.execute(f'''INSERT INTO testcase (name, testDetails) VALUES('{testcaseName}',{testcaseDetails})''')
-        db.commit()
-        return 'OK'
-    except Exception as e:
-        return e
+#def addTestcase(testcaseName,testcaseDetails):
+#    db = connectdb()
+#    try:
+#        connection = db.cursor()
+#        connection.execute(f'''INSERT INTO testcase (name, testdetails) VALUES('{testcaseName}','{testcaseDetails}'::json)''')
+#        db.commit()
+#        return 'OK'
+#    except Exception as e:
+#        return e

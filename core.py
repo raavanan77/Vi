@@ -3,7 +3,7 @@ from parser import yamlParser
 import logging
 import datetime
 import os
-from dbhandler import getdeviceDetails
+from dbhandler import getdeviceDetails,addTestcase
 
 getDetails = yamlParser(filename='/home/vignesh/Vi/testcases/rdkb/pilot.yaml')
 
@@ -44,4 +44,5 @@ def main():
         except:
             pass
 
-main()
+if __name__ == '__main__':
+    main()
