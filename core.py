@@ -3,13 +3,16 @@ from parser import yamlParser
 import logging
 import datetime
 import os
-from dbhandler import getdeviceDetails,addTestcase
+from munch import DefaultMunch
+from dbhandler import getdeviceDetails #,addTestcase
 
 getDetails = yamlParser(filename='/home/vignesh/Vi/testcases/rdkb/pilot.yaml')
+undef = object()
+testcase = DefaultMunch(undef,getDetails)
 
 logger = logging.getLogger(__name__)
 
-log_path = f'./logs/{getDetails["deviceName"]}/{getDetails["testcaseName"]+str(datetime.datetime.now())}/'
+log_path = f'/var/log/{testcase.deviceName}/{testcase.testcaseName+str(datetime.datetime.now())}/'
 try:
     if not os.path.exists(log_path):
         os.makedirs(log_path)
@@ -28,19 +31,19 @@ def dyno_vars(key,value):
 
 
 def main():
-    for test in getDetails['testStep']:
-        func = getattr(vilib,getDetails['testStep'][test]['method'])
+    for test in testcase.testStep:
+        func = getattr(vilib,testcase.testStep[test]['method'])
         try:
-            device = getDetails['testStep'][test]['param'][0]
+            device = testcase.testStep[test]['param'][0]
             device = getdeviceDetails(device)
-            getDetails['testStep'][test]['param'][0] = device[1]
+            testcase.testStep[test]['param'][0] = device[1]
         except:
             pass
-        result = func(*getDetails['testStep'][test]['param'])
-        logger.info(f"{getDetails['testStep'][test]['description']} : {result}")
+        result = func(*testcase.testStep[test]['param'])
+        logger.info(f"{testcase.testStep[test]['description']} : {result}")
         try:
-            if getDetails['testStep'][test]['savevar']:
-                dyno_vars(getDetails['testStep'][test]['savevar'],result)
+            if testcase.testStep[test]['savevar']:
+                dyno_vars(testcase.testStep[test]['savevar'],result)
         except:
             pass
 
