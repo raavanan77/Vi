@@ -19,7 +19,9 @@ def execute_client_cmd(url,method,param : list) -> list:
         "jsonrpc": "2.0",
         "id": 0,
     }
+    print(url)
     response = requests.post(url, json=payload).json()
+    print(response)
     return (response['result'])
     
 async def execute_ssh_command(IP,user,password,command,port='22'):

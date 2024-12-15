@@ -3,6 +3,6 @@ deviceName: LINUX
 deviceType: RDK-B
 testStep:
   step1:
-    method: exesleep
+    method: execute_client_cmd
     description: "Sleep for 10 seconds"
-    param: [10]
+    param: ["LAN_LINUX_CLIENT",refresh_wifinw,[]]

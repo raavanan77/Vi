@@ -12,4 +12,4 @@ def requestjson(method,url,param : list) -> list:
     response = requests.post(url, json=payload).json()
     return (response['result'])
 
-print(requestjson("cmd","http://0.0.0.0:4001/jsonrpc",["iw dev"]))
+print(requestjson("refresh_wifinw","http://0.0.0.0:4001/jsonrpc",[]))
