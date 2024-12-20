@@ -7,119 +7,24 @@ INFO:__main__:Output : SUCCESS
 INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:__main__:Execute Command : iw dev
-INFO:__main__:Output : phy#0
-	Unnamed/non-netdev interface
-		wdev 0x2
-		addr f4:c8:8a:e7:4a:e1
-		type P2P-device
-	Interface wlan0
-		ifindex 3
-		wdev 0x1
-		addr f4:c8:8a:e7:4a:e1
-		ssid GVS_B_5G
-		type managed
-		channel 36 (5180 MHz), width: 80 MHz, center1: 5210 MHz
-		txpower 22.00 dBm
-		multicast TXQ:
-			qsz-byt	qsz-pkt	flows	drops	marks	overlmt	hashcol	tx-bytes	tx-packets
-			0	0	0	0	0	0	0	0		0
-
-INFO:werkzeug:127.0.0.1 - - [14/Dec/2024 22:37:10] "POST /jsonrpc HTTP/1.1" 200 -
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
-INFO:werkzeug:[33mPress CTRL+C to quit[0m
-INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
-
-INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
+ * Running on http://172.16.0.189:4001
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
 INFO:__main__:Execute Command : nmcli radio wifi off >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
+INFO:__main__:Output : FAILURE
 
 INFO:__main__:Execute Command : nmcli radio wifi on >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
+INFO:__main__:Output : FAILURE
 
-INFO:werkzeug:127.0.0.1 - - [14/Dec/2024 22:41:46] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 15:13:55] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 15:13:55] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 15:13:55] "GET /favicon.ico HTTP/1.1" 200 -
 INFO:__main__:Execute Command : nmcli radio wifi off >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
+INFO:__main__:Output : FAILURE
 
 INFO:__main__:Execute Command : nmcli radio wifi on >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
+INFO:__main__:Output : FAILURE
 
-INFO:werkzeug:127.0.0.1 - - [14/Dec/2024 22:42:24] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 16:58:20] "POST /jsonrpc HTTP/1.1" 200 -
 INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
 INFO:__main__:Output : SUCCESS
 
@@ -129,12 +34,52 @@ INFO:__main__:Output : SUCCESS
 INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:4001
- * Running on http://192.168.0.104:4001
+ * Running on http://127.0.0.1:4001
 INFO:werkzeug:[33mPress CTRL+C to quit[0m
 INFO:__main__:Execute Command : nmcli radio wifi off >> /dev/null && echo "SUCCESS" || echo "FAILURE"
-INFO:__main__:Output : SUCCESS
+INFO:__main__:Output : FAILURE
 
 INFO:__main__:Execute Command : nmcli radio wifi on >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:__main__:Execute Command : nmcli dev wifi | wc -l
+INFO:__main__:Output : 118
+
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 17:01:07] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
 INFO:__main__:Output : SUCCESS
 
-INFO:werkzeug:127.0.0.1 - - [15/Dec/2024 09:37:29] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:__main__:Execute Command : nmcli radio wifi off >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:__main__:Execute Command : nmcli radio wifi on >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:__main__:Execute Command : nmcli dev wifi | wc -l
+INFO:__main__:Output : 97
+
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 17:02:11] "POST /jsonrpc HTTP/1.1" 200 -
+INFO:__main__:Execute Command : sudo ifconfig eth0 down >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:__main__:Execute Command : sudo ifconfig eth0 up >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : SUCCESS
+
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:4001
+ * Running on http://127.0.0.1:4001
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:__main__:Execute Command : nmcli radio wifi off >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:__main__:Execute Command : nmcli radio wifi on >> /dev/null && echo "SUCCESS" || echo "FAILURE"
+INFO:__main__:Output : FAILURE
+
+INFO:__main__:Execute Command : nmcli dev wifi | wc -l
+INFO:__main__:Output : 120
+
+INFO:werkzeug:127.0.0.1 - - [17/Dec/2024 17:03:33] "POST /jsonrpc HTTP/1.1" 200 -

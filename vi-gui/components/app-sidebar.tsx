@@ -28,12 +28,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import image from '../app/evvi.png'
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "raavanan",
+    email: "",
+    avatar: "/evvi.png",
   },
   navMain: [
     {
@@ -43,12 +45,8 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
+          title: "Testcase",
+          url: "/testcase",
         },
         {
           title: "Settings",
@@ -121,30 +119,18 @@ const data = {
   navSecondary: [
     {
       title: "Logout",
-      url: "#",
+      url: "/",
       icon: LogOut,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
     },
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  onNavItemClick,
+  ...props
+}: { onNavItemClick: (title: string) => void } & React.ComponentProps<typeof Sidebar>) {
+  const [activePage, setActivePage] = React.useState<string | null>(null)
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -153,7 +139,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarImage src='https://nextjs.org/icons/next.svg' alt='logo' />
+                  <AvatarFallback className="rounded-lg">Vi</AvatarFallback>
+                </Avatar>
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Vi</span>
@@ -165,8 +154,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={data.navMain} onItemClick={onNavItemClick} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

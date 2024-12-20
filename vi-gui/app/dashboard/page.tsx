@@ -1,50 +1,38 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { Input } from "@/components/ui/input"
+"use client";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export function Page() {
+export default function Page() {
+  const [activeComponent, setActiveComponent] = useState<string | null>(null);
+  const router = useRouter(); // Access router
+
+  const handleNavItemClick = (title: string) => {
+    console.log(title)
+    setActiveComponent(title); // Update the active component
+    // Navigate to corresponding route based on the sidebar item clicked
+    switch (title) {
+      case "Testcase":
+        router.push("/testcase");
+        break;
+      case "Devices":
+        router.push("/devices");
+        break;
+      case "Documentation":
+        router.push("/documentation");
+        break;
+      case "Settings":
+        router.push("/settings");
+        break;
+      default:
+        router.push("/");
+    }
+  };
+
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-        </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-          <Input type="text" placeholder="Testcase Name" />
-          </div>
-        </div>
-      </SidebarInset>
+      <AppSidebar onNavItemClick={handleNavItemClick}/>
     </SidebarProvider>
-  )
+  );
 }

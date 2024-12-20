@@ -1,0 +1,10 @@
+testcaseName: Pilot77
+deviceName: LINUX
+deviceType: RDK-B
+testStep:
+  step1:
+    method: execute_client_cmd
+    description: "Sleep for 10 seconds"
+    param: ["LAN_LINUX_CLIENT",refresh_wifinw,[]]
+
+{"step1": {"param": [10], "method": "exesleep", "description": "Sleep for 10 seconds"}, "deviceName": "LINUX", "deviceType": "RDK-B", "testcaseName": "Pilot77"}

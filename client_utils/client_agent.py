@@ -31,9 +31,9 @@ def refresh_wifinw():
     #Refresh wifi
     wifioff = execute_command(f"nmcli radio wifi off {exe_status}")
     wifion = execute_command(f"nmcli radio wifi on {exe_status}")
-    sleep(7)
-
-    if wifioff == "SUCCESS" and wifion == "SUCCESS":
+    sleep(10)
+    isUP = int(execute_command(f"nmcli dev wifi | wc -l"))
+    if wifioff == "SUCCESS" and wifion == "SUCCESS" and isUP > 1:
         return "SUCCESS"
     else:
         return "FAILED"
@@ -137,7 +137,6 @@ def delete_saved_wifi_connections(ssid):
 
 def refresh_interface(iface):
     if bring_interface_down(iface) == "SUCCESS" and bring_interface_up(iface) == "SUCCESS":
-        print(1)
         return "SUCCESS"
     else:
         return "FAILURE"
@@ -170,25 +169,10 @@ def application(request):
 refresh_interface("eth0")
 
 if __name__ == '__main__':
-    run_simple('0.0.0.0', 4001, application)
+    run_simple('0.0.0.0', 7777, application)
 
 
 """
-wifi_ssid_connect -- 
-wifi_ssid_connect_openSecurity --
-wifi_ssid_disconnect --
-get_wlan_ip_address -- 
-get_wlan_subnet_mask --
-get_connected_ssid_name --
-is_ssid_available --
-get_channel_number --
-get_bit_rate --
-get_security_mode --
-refresh_wifi_network --
-bringdown_interface --
-bringup_interface --
-ping_to_network --
-get_wlan_mac -- 
 ping_to_client xx
 ping_to_host xx
 wget_http_network replaced with curl

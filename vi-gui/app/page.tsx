@@ -1,6 +1,6 @@
-import { Page } from "@/app/dashboard/page"
+import { LoginForm } from "@/app/login/page"
 export default function Home() {
   return (
-    <Page/>
+    <LoginForm/>
   );
 }
