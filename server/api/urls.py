@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('users/', views.Users, name='Users'),
@@ -24,5 +27,8 @@ urlpatterns = [
     path('users/<int:pk>/',views.UserDetails,name='user_details'),
     path('testcase/editor/<str:tcname>/',views.TestcaseEditor,name='testcasebuilder'),
     path('testcase/fetch/<str:tcname>/',views.gettestcaseNames,name='gettestcaseName'),
+    path('testcase/execute/',views.executeTestcase,name='execute'),
     path('testcase/add/',views.createTestcase,name='createTestcase'),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

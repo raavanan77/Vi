@@ -25,3 +25,12 @@
 
 # Test cases 
     - can be edited with blocks or text editor that comes with web ui
+
+# Label
+<Label key={index} onClick={(e) => {
+  e.preventDefault();
+  onItemClick(testcase.testcaseName);
+}}>
+
+
+# Toaster is broken

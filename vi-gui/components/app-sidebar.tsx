@@ -4,19 +4,11 @@ import * as React from "react"
 import {
   BookOpen,
   Bot,
-  Command,
-  Frame,
   LogOut,
-  Map,
-  PieChart,
-  Send,
   Settings2,
   SquareTerminal,
-  Home,
 } from "lucide-react"
-import Link from 'next/link';
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -27,8 +19,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import image from '../app/evvi.png'
+} from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const data = {
@@ -129,7 +120,6 @@ export function AppSidebar({
   onNavItemClick,
   ...props
 }: { onNavItemClick: (title: string) => void } & React.ComponentProps<typeof Sidebar>) {
-  const [activePage, setActivePage] = React.useState<string | null>(null)
 
   return (
     <Sidebar variant="inset" {...props}>

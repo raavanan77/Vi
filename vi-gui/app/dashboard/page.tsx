@@ -1,13 +1,16 @@
 "use client";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import WebsiteEmbed from "@/components/webterminal";
 
 export default function Page() {
   const [activeComponent, setActiveComponent] = useState<string | null>(null);
   const router = useRouter(); // Access router
-
+  if (activeComponent) {
+    console.log('Active component:', activeComponent);
+}
   const handleNavItemClick = (title: string) => {
     console.log(title)
     setActiveComponent(title); // Update the active component

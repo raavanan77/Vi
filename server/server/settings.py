@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+LOG_DIR = '/var/log/vi/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-05z(9scl&ul6iwg0if1m3q^$$cgoi4ebcjweu^0o(44rbwh-+x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.16.0.189']
+ALLOWED_HOSTS = ['172.16.0.192']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
     'api'
 ]
 
@@ -74,6 +75,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

@@ -7,4 +7,4 @@ testStep:
     description: "Sleep for 10 seconds"
     param: ["LAN_LINUX_CLIENT",refresh_wifinw,[]]
 
-{"step1": {"param": [10], "method": "exesleep", "description": "Sleep for 10 seconds"}, "deviceName": "LINUX", "deviceType": "RDK-B", "testcaseName": "Pilot77"}
+{"step1": {"param": ["LAN_LINUX_CLIENT",refresh_wifinw,[]], "method": "exesleep", "description": "Sleep for 10 seconds"}, "deviceName": "LINUX", "deviceType": "RDK-B", "testcaseName": "Pilot77"}

@@ -1,6 +1,9 @@
-import { LoginForm } from "@/app/login/page"
+import {LoginForm} from "@/components/ui/login"
+
 export default function Home() {
   return (
-    <LoginForm/>
+
+        <LoginForm/>
+
   );
 }

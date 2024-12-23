@@ -4,6 +4,7 @@ from werkzeug.serving import run_simple
 import logging
 from jsonrpc import JSONRPCResponseManager, dispatcher
 from time import sleep
+from iperf3 import Server,Client
 
 logger = logging.getLogger(__name__)
 
@@ -140,11 +141,20 @@ def refresh_interface(iface):
         return "SUCCESS"
     else:
         return "FAILURE"
+    
+def iperfServer():
+    try:
+        server = Server()
+        server.port = 9000
+        result = server.run()
+        print(result.received_Mbps)
+    except Exception as e:
+        print(e)
 
 @Request.application
 def application(request):
     # Dispatcher is dictionary {<method_name>: callable}
-    print(request.data)
+    print("request.data")
     dispatcher["cmd"] = execute_command
     dispatcher["refresh_wifinw"] = refresh_wifinw
     dispatcher["is_ssid_available"] = is_ssid_available
@@ -166,7 +176,7 @@ def application(request):
         request.data, dispatcher)
     return Response(response.json, mimetype='application/json')
 
-refresh_interface("eth0")
+iperfServer()
 
 if __name__ == '__main__':
     run_simple('0.0.0.0', 7777, application)

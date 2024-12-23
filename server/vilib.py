@@ -40,16 +40,23 @@ async def execute_ssh_command(IP,user,password,command,port='22'):
 def execute_serial_command(port,command):
     if port != None:
         output = ''
-        ser = serial.Serial(port, 115200, timeout=1.5)
-        #Executing command in DUT
-        ser.write(command.encode('utf-8'))
-        #ser.reset_output_buffer()
-        ser.write(b'\r')
-        ext = ser.readlines()       #.decode('iso-8859-1').strip()
-        for _ in ext:
-            output += _.decode()
-        ser.close()
-        return output
+        try:
+            with serial.Serial(port, 115200, timeout=1.5) as ser:
+                #Executing command in DUT
+                ser.write(command.encode('utf-8'))
+                #ser.reset_output_buffer()
+                ser.write(b'\r')
+                ser.flush()
+
+                #Reading response from device
+                ext = ser.readlines()       #.decode('iso-8859-1').strip()
+                output += ''.join([_.decode() for _ in ext])
+                ser.close()
+            return output
+        except serial.SerialException as e:
+            return e
+        except Exception as e:
+            return e
     
 def get_and_verify(method,port,command,value):
     response = execute_serial_command(port,command)

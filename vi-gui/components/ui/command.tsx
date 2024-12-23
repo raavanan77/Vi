@@ -4,7 +4,7 @@ import * as React from "react"
 import { type DialogProps } from "@radix-ui/react-dialog"
 import { Command as CommandPrimitive } from "cmdk"
 import { Search } from "lucide-react"
-import { Label } from "@/components/ui/label"
+
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 
@@ -62,7 +62,6 @@ const CommandList = React.forwardRef<
     ref={ref}
     className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
     {...props}
-    
   />
 ))
 

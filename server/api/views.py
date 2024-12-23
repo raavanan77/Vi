@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from vilib import testcasedumper
 from rest_framework import status
+from core import ini_worker,add_work
 from .models import User,TestcaseHandler,DeviceHandler
 from .serializer import UserSerializer,TestCaseSerializer
 
@@ -47,7 +48,7 @@ def UserDetails(request, pk):
 @api_view(['GET'])
 def getTestCase(request,tcname):
     try:
-        testcase = TestcaseHandler.objects.get(testPlatform=tcname)
+        testcase = TestcaseHandler.objects.get(testcaseName=tcname)
         casename = TestCaseSerializer(testcase)
         return Response(casename.data)
     except TestcaseHandler.DoesNotExist as e:
@@ -90,3 +91,17 @@ def gettestcaseNames(request,tcname):
         return Response(casename.data)
     except TestcaseHandler.DoesNotExist as e:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+
+@api_view(['POST'])
+def executeTestcase(request):
+    worker = ini_worker(3)
+    if request.method == 'POST':
+        data = request.data['value']
+        for i in (data):
+            print(i:=i['value'])
+            testcase = TestcaseHandler.objects.get(testcaseName=i)
+            testcaseDetails = TestCaseSerializer(testcase)
+            if worker:
+                add_work("testcase",testcaseDetails.data)
+    return Response(status=status.HTTP_200_OK)

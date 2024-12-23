@@ -5,16 +5,16 @@ from parser import yamlParser
 import logging
 import datetime
 import os
-from munch import DefaultMunch
 import requests
-import xml.etree.ElementTree as ET 
+import xml.etree.ElementTree as ET
 import configparser
+from munch import DefaultMunch
 import threading
 import queue
 import time
 
 # Queueing jobs
-bee = queue.Queue() 
+bee = queue.Queue()
 # Config reader
 config = configparser.ConfigParser()
 config.read('settings.conf')
@@ -28,16 +28,16 @@ def dyno_vars(key,value):
     #create variables to use in between the test steps
     temp_vars[key] = value
 
-def logAgent(path,testcase):
+def logAgent(testcase):
     logger = logging.getLogger(__name__)
     try:
         if testsuite == False:
-            log_path = f'/var/log/vi/{testcase.deviceName}/{testcase.testcaseName+str(datetime.datetime.now())}/'
+            log_path = f'/var/log/vi/{testcase.testPlatform}/{testcase.testcaseName+str(datetime.datetime.now())}/'
             if not os.path.exists(log_path):
                 os.makedirs(log_path)
                 logging.basicConfig(filename=f'{log_path}/server.log', encoding='utf-8', level=logging.DEBUG)
         else:
-            log_path = f'/var/log/vi/{testcase.deviceName}/{testcase.testcaseName+str(datetime.datetime.now())}/'
+            log_path = f'/var/log/vi/{testcase.testPlatform}/{testcase.testcaseName+str(datetime.datetime.now())}/'
             if not os.path.exists(log_path):
                 os.makedirs(log_path)
                 logging.basicConfig(filename=f'{log_path}/server.log', encoding='utf-8', level=logging.DEBUG)
@@ -46,24 +46,25 @@ def logAgent(path,testcase):
     return logger
 
 #Test case Executor
-def executor(testfilename,testsuite=False):
-    getDetails = yamlParser(filename=testfilename)
+def executor(testcase,testsuite=False):
+    #getDetails = yamlParser(filename=testfilename)
     undef = object()
-    testcase = DefaultMunch(undef,getDetails)
+    testcase = DefaultMunch(undef,testcase)
     logger = logAgent(testcase=testcase)
-    for test in testcase.testStep:
-        func = getattr(vilib,testcase.testStep[test]['method'])
+    for test in testcase.testcaseDetails:
+        func = getattr(vilib,testcase.testcaseDetails[test]['method'])
         try:
-            device = testcase.testStep[test]['param'][0]
-            device = getdeviceDetails(deviceName=device)
-            testcase.testStep[test]['param'][0] = device[3]
+            pass
+            #device = testcase.testcaseDetails[test]['param'][0]
+            #device = getdeviceDetails(testPlatform=device)
+            #testcase.testcaseDetails[test]['param'][0] = device[3]
         except Exception as e:
             print(e)
-        result = func(*testcase.testStep[test]['param'])
-        logger.info(f"{testcase.testStep[test]['description']} : {result}")
+        result = func(*testcase.testcaseDetails[test]['param'])
+        logger.info(f"{testcase.testcaseDetails[test]['description']} : {result}")
         try:
-            if testcase.testStep[test]['savevar']:
-                dyno_vars(testcase.testStep[test]['savevar'],result)
+            if testcase.testcaseDetails[test]['savevar']:
+                dyno_vars(testcase.testcaseDetails[test]['savevar'],result)
         except:
             pass
     return 'OK'
@@ -80,7 +81,6 @@ def testsuite(xml):
 def worker():
     while True:
         worker_bee = bee.get()
-        print("Printer: ",worker_bee)
         if worker_bee is None:
             break
         work_type, args = worker_bee
@@ -109,8 +109,8 @@ def stop_worker(threads):
         t.join()
 
 #Adding jobs to the queue
-def add_work(work_type,filename):
+def add_work(work_type,testcase):
     if work_type == 'testsuite':
-        bee.put((work_type,{"xml":filename}))
+        bee.put((work_type,{"xml":testcase}))
     else:
-        bee.put((work_type,{"testfilename":filename}))
+        bee.put((work_type,{"testcase":testcase}))

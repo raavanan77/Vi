@@ -4,7 +4,7 @@ const WebsiteEmbed = () => {
   return (
     <div>
       <iframe
-        src="http://172.16.0.120:5555" // Replace with the desired URL
+        src="http://0.0.0.0:7681" // Replace with the desired URL
         title="Embedded Website"
         className="min-h-[100vh] flex-1 h-full w-full rounded-xl bg-muted/50   "
         sandbox="allow-scripts allow-same-origin"
