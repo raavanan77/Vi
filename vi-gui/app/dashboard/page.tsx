@@ -17,7 +17,7 @@ export default function Page() {
     // Navigate to corresponding route based on the sidebar item clicked
     switch (title) {
       case "Testcase":
-        router.push("/testcase");
+        router.push("/devices");
         break;
       case "Devices":
         router.push("/devices");

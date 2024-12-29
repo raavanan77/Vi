@@ -10,12 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
+import configparser
+
+#Fetch Database creds from config file
+config = configparser.ConfigParser()
+config.read('/opt/vi/config/settings.conf')
+
+database = {
+    "dbName" : config['DATABASE']['DBNAME'],
+    "dbHost" : config['DATABASE']['DBHOST'],
+    "dbPort" : config['DATABASE']['DBPORT'],
+    "dbUser" : config['DATABASE']['DBUSER'],
+    "dbPass" : config['DATABASE']['DBPASSWD'],
+    }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOG_DIR = '/var/log/vi/'
+
+LOG_DIR = config['LOG']['LOGPATH']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -25,7 +40,7 @@ SECRET_KEY = 'django-insecure-05z(9scl&ul6iwg0if1m3q^$$cgoi4ebcjweu^0o(44rbwh-+x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.16.0.192']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,11 +102,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vi',
-        'USER': 'vignesh',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': database['dbName'],
+        'USER': database['dbUser'],
+        'PASSWORD': database['dbPass'],
+        'HOST': database['dbHost'],
+        'PORT': database['dbPort'],
     }
 }
 
@@ -138,3 +153,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+SIMPLE_JWT = {
+     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+     'ROTATE_REFRESH_TOKENS': True,
+     'BLACKLIST_AFTER_ROTATION': True
+}

@@ -1,0 +1,15 @@
+{
+    "DeviceName": "OpenWRT-VM",
+    "isClient": false,
+    "hostname": "root",
+    "password": "root",
+    "serial": "",
+    "WanIp": "192.168.56.3",
+    "sshPort": 22,
+    "DevicePlatform": "Openwrt",
+    "lanIface": "",
+    "wanIface": "eth0",
+    "wlanIface": "",
+    "extaprops": {}
+  }
+  
