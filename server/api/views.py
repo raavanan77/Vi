@@ -3,53 +3,17 @@ from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from core import ini_worker,add_work
-from .models import User,TestcaseHandler,DeviceHandler
-from .serializer import UserSerializer,TestCaseSerializer
+from core_utils.core import TestCaseExecutor
+from .models import TestcaseHandler,DeviceHandler
+from .serializer import TestCaseSerializer,DeviceSerializer
 
-@api_view(['GET'])
-def Users(request):
-    users = User.objects.all()
-    print(users.query)
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
-# Create your views here.
-
-@api_view(['POST'])
-def createUser(request):
-    serialze = UserSerializer(data=request.data)
-    if serialze.is_valid():
-        serialze.save()
-        return Response(serialze.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response(serialze.data, status=status.HTTP_400_BAD_REQUEST)
-    
-@api_view(['GET','PUT','DELETE'])
-def UserDetails(request, pk):
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist as e:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'GET':
-        serialzer = UserSerializer(user)
-        return Response(serialzer.data)
-    
-    elif request.method == 'PUT':
-        serialzer = UserSerializer(user, data=request.data)
-        if serialzer.is_valid():
-            serialzer.save()
-        return Response(serialzer.data)
-    
-    elif request.method == 'DELETE':
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
     
 @api_view(['GET'])
-def getTestCase(request,tcname):
+def getTestCase(request):
     try:
-        testcase = TestcaseHandler.objects.get(testcaseName=tcname)
-        casename = TestCaseSerializer(testcase)
+        testcase = TestcaseHandler.objects.all()
+        print(testcase.query)
+        casename = TestCaseSerializer(testcase, many=True)
         return Response(casename.data)
     except TestcaseHandler.DoesNotExist as e:
         return Response(status=status.HTTP_404_NOT_FOUND)
@@ -95,13 +59,34 @@ def gettestcaseNames(request,tcname):
 
 @api_view(['POST'])
 def executeTestcase(request):
-    worker = ini_worker(3)
     if request.method == 'POST':
-        data = request.data['value']
-        for i in (data):
-            print(i:=i['value'])
-            testcase = TestcaseHandler.objects.get(testcaseName=i)
-            testcaseDetails = TestCaseSerializer(testcase)
-            if worker:
-                add_work("testcase",testcaseDetails.data)
+        TestCaseExecutor(data=request.data)
     return Response(status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def addDevice(request):
+    if request.method == 'POST':
+        device = DeviceSerializer(data=request.data)
+    if device.is_valid():
+        device.save()
+        return Response(status=status.HTTP_201_CREATED)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def removeDevice(request,dn):
+    device = DeviceHandler.objects.get(DeviceName=dn)
+    print(device)
+    if request.method == 'DELETE':
+        device.delete()
+        return Response(status=status.HTTP_200_OK)
+    
+@api_view(['GET'])
+def getDevice(request,name):
+    try:
+        testcase = DeviceHandler.objects.filter(DevicePlatform=name)
+        device = DeviceSerializer(testcase, many=True)
+        return Response(device.data)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
