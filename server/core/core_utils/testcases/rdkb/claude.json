@@ -1,0 +1,110 @@
+{
+    "testcaseName": "Pilot_Sanity",
+    "testPlatform": "RDKB",
+    "testArea": "Sanity",
+    "version": "1.0",
+    "priority": "P1",
+    
+    "testbed": {
+      "DUT": {
+        "required": true,
+        "type": "RDKB_Gateway",
+        "minFirmwareVersion": "20.x",
+        "interfaces": ["wan", "lan", "wifi"],
+        "precheck": {
+          "connectivity": true,
+          "services": ["wifi", "dhcp"]
+        }
+      },
+      "Clients": {
+        "required": false,
+        "min": 0,
+        "max": 2,
+        "types": ["linux", "windows"]
+      }
+    },
+  
+    "testcaseDetails": {
+      "step1": {
+        "target": "DUT",
+        "method": "execute_serial_command",
+        "param": "dmcli eRT setv Device.WiFi.Radio.1.Enable bool 1",
+        "description": "Enable WiFi Radio 1",
+        "expectedResult": "succeed",
+        "validation": {
+          "type": "output",
+          "successPattern": "Execution succeed",
+          "failurePatterns": [
+            "Error",
+            "Invalid parameter",
+            "Not found"
+          ]
+        },
+        "errorHandling": {
+          "breakOnFailure": true,
+          "retryOnFail": 3,
+          "retryInterval": 5,
+          "recoveryActions": [
+            "reset_wifi_radio",
+            "restart_wifi_service"
+          ]
+        },
+        "timing": {
+          "postWaitInSecs": 10,
+          "timeout": 30
+        },
+        "logging": {
+          "captureConsole": true,
+          "captureDmesg": true,
+          "parameters": [
+            "Device.WiFi.Radio.1.Status",
+            "Device.WiFi.Radio.1.Enable"
+          ]
+        }
+      },
+      "step2": {
+        "target": "DUT",
+        "method": "verify_wifi_status",
+        "param": "Device.WiFi.Radio.1.Status",
+        "expectedResult": "Up",
+        "validation": {
+          "type": "value",
+          "expectedValue": "Up",
+          "acceptableValues": ["Up", "Enabled"]
+        },
+        "errorHandling": {
+          "breakOnFailure": true,
+          "retryOnFail": 2,
+          "retryInterval": 5
+        },
+        "timing": {
+          "postWaitInSecs": 5,
+          "timeout": 20
+        }
+      }
+    },
+  
+    "reporting": {
+      "logLevel": "INFO",
+      "requiredLogs": [
+        "serial_console",
+        "dmcli_output",
+        "wifi_status"
+      ],
+      "metrics": [
+        "command_execution_time",
+        "radio_enable_time"
+      ]
+    },
+  
+    "cleanup": {
+      "required": true,
+      "steps": [
+        {
+          "target": "DUT",
+          "method": "restore_wifi_settings",
+          "ignoreFailure": true
+        }
+      ]
+    }
+  }

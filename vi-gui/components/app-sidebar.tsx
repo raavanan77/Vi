@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useEffect, useState } from "react"
+import { ThemeToggle } from "./darmode-toogle"
 
 const data = {
   user: {
@@ -39,11 +40,7 @@ const data = {
       items: [
         {
           title: "Testcase",
-          url: "/devices",
-        },
-        {
-          title: "Testcase Builder",
-          url: "/testcaseBuilder",
+          url: "/testcases",
         },
       ],
     },
@@ -53,8 +50,11 @@ const data = {
       icon: Bot,
       items: [
         {
-          title: "Add device",
-          url: "#",
+          title: "Device List",
+          url: "/devices/add",
+        },{
+          title: "DUT Profiles",
+          url: "/devices/dutprofiles",
         },
       ],
     },

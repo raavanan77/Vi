@@ -1,15 +1,24 @@
 "use client";
 
-//import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/toaster"
+//import type { Metadata } from "next";import { useToast } from "@/hooks/use-toast"
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@/components/ui/toast"
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { boolean } from "zod";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { useToast } from "@/hooks/use-toast";
+import { NavigationMenuDemo } from "@/components/nav-menu";
+import { ThemeToggle } from "@/components/darmode-toogle";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -47,11 +56,17 @@ export default function RootLayout({
     // Navigate to corresponding route based on the sidebar item clicked
     switch (title) {
       case "Testcase":
-        router.push("/devices");
+        router.push("/testcases");
         break;
-      case "Devices":
-        router.push("/devices");
+      case "Testcase Builder":
+          router.push("/testcaseBuilder");
+          break;
+      case "Device List":
+        router.push("/devices/add");
         break;
+        case "DUT Profiles":
+          router.push("/devices/dutprofiles");
+          break;
       case "Documentation":
         router.push("/documentation");
         break;
@@ -62,6 +77,8 @@ export default function RootLayout({
         router.push("/");
     }
   };
+
+  const { toasts } = useToast()
   return (
     
     <html lang="en">
@@ -69,14 +86,20 @@ export default function RootLayout({
       >
       <ThemeProvider
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="light"
       enableSystem
       disableTransitionOnChange
       >
       <SidebarProvider>
         <AppSidebar onNavItemClick={handleNavItemClick}/>
         <SidebarInset>
-        <header className="flex h-4 shrink-0 items-center gap-2"></header>
+        <header className="flex h-12 shrink-0 items-center gap-2 border-b">
+          <div className="flex items-center gap-2 px-3">
+            <SidebarTrigger/>
+            <NavigationMenuDemo/>
+            <ThemeToggle/>
+          </div>
+        </header>
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
             <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
               {children}
@@ -84,7 +107,23 @@ export default function RootLayout({
           </div>
         </SidebarInset>
       </SidebarProvider>
-        <Toaster/>
+      <ToastProvider>
+      {toasts.map(function ({ id, title, description, action, ...props }) {
+        return (
+          <Toast key={id} {...props}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            {action}
+            <ToastClose />
+          </Toast>
+        )
+      })}
+      <ToastViewport />
+    </ToastProvider>
       </ThemeProvider>
       </body>
     </html>

@@ -24,3 +24,8 @@
 # 1. Login/Sign up Page
 # 2. Dashboard 
 # 3. Pages We need [{Devices, Add Device}, {Test execution, Test Script explorer, Testcase Builder},{System Config,},{Logger,Session Management} ]
+# 4. Sniffer trace
+
+# Extras Industrial Reqs
+    1. Log Analysis using Machine Learning
+    

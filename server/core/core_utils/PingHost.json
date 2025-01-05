@@ -1,0 +1,17 @@
+{
+    "testcasename":"Ping Host",
+    "testplatform":"Openwrt",
+    "testarea":"Functional",
+    "description":"This test case is to verify the ping to host",
+    "priority":"P0",
+    "testcasedetails":{
+        "step1":{
+            "target":"DUT",
+            "method":"execute_ssh_command",
+            "param":"ping -c2 192.168.56.1 >> /dev/null && echo \"PASS\" || echo \"FAIL\"",
+            "postWaitInSecs":1,
+            "breakOnFailure":true,
+            "validation":{ "check":"contains", "expected":"PASS" }
+        }
+    }
+}
