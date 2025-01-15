@@ -8,7 +8,7 @@ from munch import Munch
 import threading
 import queue
 from core.models import DeviceHandler,TestcaseHandler
-from core.serializer import DeviceSerializer, TestCaseSerializer
+from ..api.serializer import DeviceSerializer, TestCaseSerializer
 
 # Queueing jobs
 bee = queue.Queue()

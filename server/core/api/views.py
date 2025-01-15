@@ -2,8 +2,8 @@ from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .core_utils.core import TestCaseExecutor
-from .models import TestcaseHandler,DeviceHandler,DUTHandler
+from ..core_utils.core import TestCaseExecutor
+from ..models import TestcaseHandler,DeviceHandler,DUTHandler
 from .serializer import TestCaseSerializer,DeviceSerializer,DutSerializer
 
 @api_view(['GET'])

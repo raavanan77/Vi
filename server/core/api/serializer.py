@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import TestcaseHandler,DeviceHandler,DeviceMapper,DUTHandler
+from ..models import TestcaseHandler,DeviceHandler,DeviceMapper,DUTHandler
 
 class TestCaseSerializer(serializers.ModelSerializer):
     class Meta:
