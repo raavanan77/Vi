@@ -188,7 +188,7 @@ export default function TestcaseDataTable() {
     setLoading(true);
     try {
       const response = await fetchallTestcase();
-      const result = await response.json();
+      const result = await response;
   
       if (Array.isArray(result)) {
         const mappedTestcases : Testcase[] = result.map((testcase) => ({

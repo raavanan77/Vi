@@ -1,11 +1,11 @@
-import {LoginForm} from "@/app/login"
+import {Login} from "@/app/login/page"
 import { GalleryVerticalEnd } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
-        <LoginForm />
+        <Login />
       </div>
     </div>
   );

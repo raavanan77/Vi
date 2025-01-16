@@ -227,7 +227,7 @@ const TestCaseBuilder: React.FC<TestStepProps> = ({ param }) => {
             </div>
             <div>
               <Label className="block text-sm font-medium mb-1">Platform</Label>
-              <Select>
+              <Select name='testplatform' defaultValue={testCase.testplatform} onValueChange={(value) => setTestCase(prev => ({...prev, testplatform: value}))}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select DUT Platform" />
             </SelectTrigger>
