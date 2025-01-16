@@ -4,6 +4,7 @@ import * as React from "react"
 import {
   BookOpen,
   Bot,
+  Home,
   LogOut,
   Settings2,
   SquareTerminal,
@@ -21,6 +22,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useEffect, useState } from "react"
+import { ThemeToggle } from "./darmode-toogle"
 
 const data = {
   user: {
@@ -30,60 +33,28 @@ const data = {
   },
   navMain: [
     {
-      title: "Execution",
+      title: "Home",
       url: "#",
-      icon: SquareTerminal,
+      icon: Home,
       isActive: true,
       items: [
         {
           title: "Testcase",
-          url: "/testcase",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          url: "/testcases",
         },
       ],
     },
     {
       title: "Devices",
-      url: "#",
+      url: "/devices",
       icon: Bot,
       items: [
         {
-          title: "Add device",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Device List",
+          url: "/devices/add",
+        },{
+          title: "DUT Profiles",
+          url: "/devices/dutprofiles",
         },
       ],
     },

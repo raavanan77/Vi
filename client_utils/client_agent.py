@@ -4,13 +4,7 @@ from werkzeug.serving import run_simple
 import logging
 from jsonrpc import JSONRPCResponseManager, dispatcher
 from time import sleep
-from iperf3 import Server,Client
-
-logger = logging.getLogger(__name__)
-
-log_path = './logs'
-
-logging.basicConfig(filename=f'{log_path}/client.log', encoding='utf-8', level=logging.DEBUG)
+import jsonrpc
 
 exe_status = ">> /dev/null && echo \"SUCCESS\" || echo \"FAILURE\""
 
@@ -21,9 +15,9 @@ def foobar(**kwargs):
 def execute_command(command):       
     if command:
         # Run the command and get the output
-        logger.info(f"Execute Command : {command}")
+        print(f"Execute Command : {command}")
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        logger.info(f"Output : {result.stdout}")
+        print(f"Output : {result.stdout}")
         return result.stdout.strip('\n')  #.decode('utf-8', errors='ignore')
     else:
         return result.stderr
@@ -142,19 +136,11 @@ def refresh_interface(iface):
     else:
         return "FAILURE"
     
-def iperfServer():
-    try:
-        server = Server()
-        server.port = 9000
-        result = server.run()
-        print(result.received_Mbps)
-    except Exception as e:
-        print(e)
 
 @Request.application
 def application(request):
     # Dispatcher is dictionary {<method_name>: callable}
-    print("request.data")
+    print(request.data)
     dispatcher["cmd"] = execute_command
     dispatcher["refresh_wifinw"] = refresh_wifinw
     dispatcher["is_ssid_available"] = is_ssid_available
@@ -176,46 +162,5 @@ def application(request):
         request.data, dispatcher)
     return Response(response.json, mimetype='application/json')
 
-iperfServer()
-
 if __name__ == '__main__':
     run_simple('0.0.0.0', 7777, application)
-
-
-"""
-ping_to_client xx
-ping_to_host xx
-wget_http_network replaced with curl
-wget_https_network replaced with curl
-delete_saved_wifi_connections 
-telnetToClient
-ftpToClient
-get_wlan_accesspoint
-add_static_route
-del_static_route
-nslookup_in_client
-tcp_init_server_perf
-tcp_request_perf
-tcp_get_client_throughput
-tcp_init_server
-tcp_request
-validate_tcp_server_output
-validate_tcp_server_output_throughput
-udp_init_server
-udp_request
-validate_udp_output
-kill_iperf
-ftpFromWlan
-ftpFromlan
-validate_FTP
-ssh_to_client
-start_node
-kill_selenium
-trigger_port
-netcat_init_server
-write_msgtofile
-kill_netcat
-read_fileContent
-ping_to_Android
-forget_nw_android
-"""
