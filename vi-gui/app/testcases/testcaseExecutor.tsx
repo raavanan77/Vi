@@ -34,8 +34,6 @@ const TestcaseExecutor : React.FC<MultipleSelectorControlledProps> = ({ params }
   let DJANGO_SERVER_URL = process.env.DJANGO_SERVER_URL;
   let DJANGO_SERVER_PORT = process.env.DJANGO_SERVER_PORT;
 
-
-
   const fetchData = async () => {
   setLoading(true);
   try {
@@ -117,10 +115,6 @@ const TestcaseExecutor : React.FC<MultipleSelectorControlledProps> = ({ params }
       });
     }, 100);
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     

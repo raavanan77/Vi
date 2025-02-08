@@ -3,14 +3,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from ..core_utils.core import TestCaseExecutor
-from ..models import TestcaseHandler,DeviceHandler,DUTHandler
-from .serializer import TestCaseSerializer,DeviceSerializer,DutSerializer
+from ..models import TestcaseHandler,DeviceHandler,ClientType,DUTHandler
+from .serializer import TestCaseSerializer,DeviceSerializer,DutSerializer,ClientTypeSerializer
 
 @api_view(['GET'])
 def getTestCase(request):
     try:
         testcase = TestcaseHandler.objects.all()
-        print(testcase.query)
         casename = TestCaseSerializer(testcase, many=True)
         return Response(casename.data)
     except TestcaseHandler.DoesNotExist as e:
@@ -60,15 +59,14 @@ def gettestcaseNames(request,tcname):
 @api_view(['POST'])
 def executeTestcase(request):
     if request.method == 'POST':
-        print(request.data)
         TestCaseExecutor(data=request.data)
     return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
-def addDevice(request):
+def addDevice(request,devtype):
     if request.method == 'POST':
-        device = DeviceSerializer(data=request.data)
+        device = DeviceSerializer(data=request.data) if devtype == 'client' else DutSerializer(data=request.data)
     if device.is_valid():
         device.save()
         return Response(status=status.HTTP_201_CREATED)
@@ -76,13 +74,13 @@ def addDevice(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET','PUT','DELETE'])
-def editDevice(request,dn):
-    device = DeviceHandler.objects.get(devicename=dn)
+def editDevice(request,devtype,devname):
+    device = DeviceHandler.objects.get(devicename=devname) if devtype == 'client' else DUTHandler.objects.get(dutname=devname)
     if request.method == 'GET':
-        device = DeviceSerializer(device)
+        device = DeviceSerializer(device) if devtype == 'client' else DutSerializer(device)
         return Response(device.data)
     if request.method == 'PUT':
-        device = DeviceSerializer(device, data=request.data)
+        device = DeviceSerializer(device, data=request.data) if devtype == 'client' else DutSerializer(device, data=request.data)
         if device.is_valid():
             device.save()
         return Response(status=status.HTTP_200_OK)
@@ -91,21 +89,20 @@ def editDevice(request,dn):
         return Response(status=status.HTTP_200_OK)
     
 @api_view(['GET'])
-def getDevice(request,name):
+def getDevice(request,devtype):
     try:
-        testcase = DeviceHandler.objects.filter(deviceplatform=name)
-        device = DeviceSerializer(testcase, many=True)
+        dev = DeviceHandler.objects.all() if devtype == 'client' else DUTHandler.objects.all()
+        device = DeviceSerializer(dev, many=True) if devtype == 'client' else DutSerializer(dev, many=True)
         return Response(device.data)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-@api_view(['GET'])
-def getDUTDevice(request):
-    data = {}
-    try:
-        device = DUTHandler.objects.all()
-        DUT = DutSerializer(device, many=True)
-        return Response(DUT.data)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
- 
+@api_view(['POST'])
+def addclienttype(request):
+    print(request.method)
+    if request.method == 'POST':
+        print(request.data)
+        ctype = ClientTypeSerializer(data=request.data)
+        if ctype.is_valid():
+            ctype.save()
+            return Response(status=status.HTTP_200_OK)

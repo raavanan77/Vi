@@ -25,6 +25,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { useCallback } from "react"
+import axiosInstance from "@/lib/axios"
+import { useRouter } from "next/navigation"
+import { toast } from '@/hooks/use-toast';
 
 export function NavUser({
   user,
@@ -35,6 +39,23 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const router = useRouter();
+  const handleLogout = useCallback(async () => {
+    try {
+      await axiosInstance.post('/auth/logout/');
+      router.push('/login');
+      toast({
+        title: "Success",
+        description: "Logged out successfully"
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Logout failed",
+        variant: "destructive"
+      });
+    }
+  }, [router]);
   const { isMobile } = useSidebar()
 
   return (
@@ -80,7 +101,7 @@ export function NavUser({
                 Account
               </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

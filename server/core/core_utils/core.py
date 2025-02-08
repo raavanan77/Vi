@@ -47,7 +47,7 @@ def logAgent(testcase):
     logger = logging.getLogger(__name__)
     try:
         if testsuite == False:
-            log_path = f'/opt.vi/logs/{testcase.testplatform}/{testcase.testcasename+str(datetime.datetime.now())}/'
+            log_path = f'/opt/vi/logs/{testcase.testplatform}/{testcase.testcasename+str(datetime.datetime.now())}/'
             if not os.path.exists(log_path):
                 os.makedirs(log_path)
                 logging.basicConfig(filename=f'{log_path}/server.log', encoding='utf-8', level=logging.DEBUG)
@@ -72,19 +72,15 @@ def executor(testcase,DUT,testsuite=False):
         
         func_param = testcase.testcasedetails[test]['param']
         func = getattr(DUTobj,testcase.testcasedetails[test]['method'])
-        print("Func",func.__name__)
         func()
         try:
             target_device = testcase.testcasedetails[test]['target']
-            print("Target Device",target_device)
             if target_device == 'DUT':
                 device = DUT
                 if "ssh" in func.__name__:
                     func_param = [device.wanip,device.hostname,device.password,testcase.testcasedetails[test]['param']]
             else:
-                print("Else entered")
                 device = "http://192.168.0.104:7777/jsonrpc" #DUT.rpcurl
-                print("Device Param",device)
                 func_param = [device,"cmd",[testcase.testcasedetails[test]['param']]] #Need some changes here
             
             #testcase.testcasedetails[test]['param'][0] = device[3]

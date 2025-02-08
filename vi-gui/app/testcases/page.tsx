@@ -36,12 +36,12 @@ import {
 import { useEffect, useState } from "react"
 import { DataTableFacetedFilter } from "@/components/ui/facted-filter"
 import { DataTablePagination } from "@/components/page-control"
-import TestcaseExecutor from "@/app/testcases/testcaseExecutor"
 import { Separator } from "@/components/ui/separator"
 import { useRouter } from "next/navigation"
 import { Label } from "@/components/ui/label"
-import { deleteTestcase, fetchallTestcase } from "../api"
+import { deleteTestcase, fetchallTestcase } from "@/app/api"
 import { toast } from "@/hooks/use-toast"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 
 export type Testcase = {
   name: string;
@@ -49,8 +49,6 @@ export type Testcase = {
   area: string;
     
 }
-
-
 
 export default function TestcaseDataTable() {
   const router = useRouter();
@@ -181,8 +179,6 @@ export default function TestcaseDataTable() {
     },
   })
     const [loading, setLoading] = useState(true);
-    let DJANGO_SERVER_URL = process.env.DJANGO_SERVER_URL;
-    let DJANGO_SERVER_PORT = process.env.DJANGO_SERVER_PORT;
   
     const fetchData = async () => {
     setLoading(true);
@@ -213,7 +209,11 @@ export default function TestcaseDataTable() {
       }, []);
 
   return (
-    <div className="p-4 w-full">
+    <div className="w-full">
+      <Card className="p-2">
+        <CardHeader className="flex flex-row items-left">
+          <CardTitle>Testcase</CardTitle>
+        </CardHeader>
       <div className="flex items-center py-4 space-x-2">
         <Input
           placeholder="Search testcase..."
@@ -312,10 +312,12 @@ export default function TestcaseDataTable() {
           </TableBody>
         </Table>
       </div>
+      
       <div className="flex flex-col gap-2.5">
         <DataTablePagination table={table} />
         {table.getFilteredSelectedRowModel().rows.length > 0}
       </div>
+  </Card>
 </div>
   )
 }

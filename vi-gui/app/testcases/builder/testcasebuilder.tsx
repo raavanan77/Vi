@@ -14,7 +14,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -380,7 +379,7 @@ const TestCaseBuilder: React.FC<TestStepProps> = ({ param }) => {
           {isEditMode ? 'Update Test Case' : 'Save Test Case'}
         </Button>
         <Button onClick={() => route.back()}>
-          <CircleOff/>Cancel
+          <CircleOff className="mr-2"/>Cancel
         </Button>
       </div>
     </Card>

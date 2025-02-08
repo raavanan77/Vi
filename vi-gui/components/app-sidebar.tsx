@@ -1,13 +1,14 @@
-"use client"
-
 import * as React from "react"
 import {
   BookOpen,
   Bot,
   Home,
+  icons,
   LogOut,
+  Router,
   Settings2,
   SquareTerminal,
+  WaypointsIcon,
 } from "lucide-react"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
@@ -22,8 +23,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { useEffect, useState } from "react"
-import { ThemeToggle } from "./darmode-toogle"
+
 
 const data = {
   user: {
@@ -36,7 +36,6 @@ const data = {
       title: "Home",
       url: "#",
       icon: Home,
-      isActive: true,
       items: [
         {
           title: "Testcase",
@@ -51,7 +50,7 @@ const data = {
       items: [
         {
           title: "Device List",
-          url: "/devices/add",
+          url: "/devices",
         },{
           title: "DUT Profiles",
           url: "/devices/dutprofiles",
@@ -80,8 +79,13 @@ const data = {
   ],
   navSecondary: [
     {
+      title: "API Docs",
+      url: "/docs/api",
+      icon: WaypointsIcon,
+    },
+    {
       title: "Logout",
-      url: "/",
+      url: "",
       icon: LogOut,
     },
   ],

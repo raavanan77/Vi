@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
     'core',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -159,6 +160,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = False  # Change to True in production
+SESSION_COOKIE_SECURE = False  # Change to True in production
 
 SIMPLE_JWT = {
      'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),

@@ -13,12 +13,13 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter,usePathname } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
 import { NavigationMenuDemo } from "@/components/nav-menu";
 import { ThemeToggle } from "@/components/darmode-toogle";
+import { AuthProvider } from "@/contexts/Authcontext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,12 +45,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isLogin, setLogin] = useState<boolean>();
   const [activeComponent, setActiveComponent] = useState<string | null>(null);
   const router = useRouter(); // Access router
+  const pathname = usePathname();
+
   if (activeComponent) {
     console.log('Active component:', activeComponent);
 }
+  const isLoginPage = pathname === "/login";
   const handleNavItemClick = (title: string) => {
     console.log(title)
     setActiveComponent(title); // Update the active component
@@ -62,7 +65,7 @@ export default function RootLayout({
           router.push("/testcaseBuilder");
           break;
       case "Device List":
-        router.push("/devices/add");
+        router.push("/devices");
         break;
         case "DUT Profiles":
           router.push("/devices/dutprofiles");
@@ -86,11 +89,11 @@ export default function RootLayout({
       >
       <ThemeProvider
       attribute="class"
-      defaultTheme="light"
+      defaultTheme="dark"
       enableSystem
       disableTransitionOnChange
       >
-      <SidebarProvider>
+      {!isLoginPage ? (<SidebarProvider>
         <AppSidebar onNavItemClick={handleNavItemClick}/>
         <SidebarInset>
         <header className="flex h-12 shrink-0 items-center gap-2 border-b">
@@ -106,7 +109,15 @@ export default function RootLayout({
             </div>
           </div>
         </SidebarInset>
-      </SidebarProvider>
+      </SidebarProvider>) : (
+        <AuthProvider>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+          {children}
+        </div>
+      </div>
+      </AuthProvider>
+      ) }
       <ToastProvider>
       {toasts.map(function ({ id, title, description, action, ...props }) {
         return (

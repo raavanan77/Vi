@@ -8,10 +8,15 @@ class TestcaseHandler(models.Model):
     description = models.TextField(default='No Description')
     priority = models.CharField(max_length=20,default='P0')
     testcasedetails = models.JSONField()
+    
+class TestSuiteHandler(models.Model):
+    testsuitename = models.CharField(max_length=200,unique=True)
+    testsuiteplatform = models.CharField(max_length=30)
+    testcaselist = models.JSONField()
 
 class DUTHandler(models.Model):
     dutname = models.CharField(max_length=200,unique=True)
-    hostname = models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
     password = models.CharField(max_length=200,blank=True,null=True)
     serial = models.CharField(max_length=50,blank=True,null=True)
     baudrate = models.IntegerField(blank=True,null=True)
@@ -23,8 +28,7 @@ class DUTHandler(models.Model):
 
 class DeviceHandler(models.Model):
     devicename = models.CharField(max_length=200,unique=True)               # Name of the Device.
-    isclient = models.BooleanField(null=True)                               # Is the Deivce, Client ?
-    hostname = models.CharField(max_length=200)                             # Hostname of the device.
+    username = models.CharField(max_length=200)                             # Hostname of the device.
     password = models.CharField(max_length=200,blank=True,null=True)        # Password of the device.
     wanip = models.CharField(max_length=200)                                # Wan IP address of the device, Note: Client Agent will listen listen for commands from Server with this WAN IP.
     rpcport = models.IntegerField(default=7777,blank=True,null=True)        # Port for client agent to listen for commands from server.
@@ -36,22 +40,23 @@ class DeviceHandler(models.Model):
     wlaniface = models.CharField(max_length=20,blank=True,null=True)        # Wlan interface name
     extaprops = models.JSONField(blank=True,null=True)                      # Extra properties that you wanna add, then call it in test script.
 
-
     #Saves RPC URL for Clients
     def save(self ,*args, **kwargs):
-        if self.isclient:
+        if self.wanip:
             self.rpcurl = f"http://{self.wanip}:{self.rpcport}/jsonrpc" 
         else:
             self.rpcurl = ''
 
         super(DeviceHandler, self).save(*args,**kwargs)
 
-
-class TestSuiteHandler(models.Model):
-    testsuitename = models.CharField(max_length=200,unique=True)
-    testsuiteplatform = models.CharField(max_length=30)
-    testcaselist = models.JSONField()
+class ClientType(models.Model):
+    name = models.CharField(max_length=100,unique=True)
 
 class DeviceMapper(models.Model):
-    profilename = models.ForeignKey(DUTHandler,on_delete=models.CASCADE)
+    profilename = models.CharField(max_length=100,unique=True)
+    dut_id = models.ForeignKey(DUTHandler,on_delete=models.CASCADE)
     clientslist = models.ManyToManyField(DeviceHandler, related_name='mapped_clients')
+    clientIdlist = models.ManyToManyField(ClientType, related_name='client_type')
+
+
+    

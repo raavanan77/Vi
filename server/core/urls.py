@@ -27,8 +27,8 @@ urlpatterns = [
     path('testcase/fetch/<str:tcname>/',views.gettestcaseNames,name='gettestcaseName'),
     path('testcase/execute/',views.executeTestcase,name='execute'),
     path('testcase/add/',views.createTestcase,name='createTestcase'),
-    path('device/client/add/',views.addDevice,name='Add_Device'),
-    path('device/client/delete/<str:dn>/',views.editDevice,name='Del_Device'),
-    path('device/client/get/<str:name>',views.getDevice,name='Get_Device'),
-    path('device/dut/get/',views.getDUTDevice,name='Get_All_Device'),
+    path('device/add/<str:devtype>/',views.addDevice,name='Add_Device'),
+    path('device/edit/<str:devtype>/<str:devname>/',views.editDevice,name='Edit_Device'),
+    path('device/get/<str:devtype>/',views.getDevice,name='Get_Device'),
+    path('device/client/type/',views.addclienttype,name='Add_clienttype')
 ]
