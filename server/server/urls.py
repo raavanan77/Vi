@@ -22,6 +22,9 @@ from django.urls import path, re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt
+from core.schema import schema
 from .views import logout
 
 schema_view = get_schema_view(
@@ -38,6 +41,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema = schema))),
     path('api/',include('core.urls')),
     path('auth/register/', RegisterView.as_view(), name='register'),
     path('auth/login/', LoginView.as_view(), name='login'),

@@ -43,20 +43,37 @@ npm run dev
 # Requirements
 
 1. Client Requirements [Linux]
-   nmcli
-   ifconfig
-   iw
-   telnet
-   ssh
-   tftpd-hpa or any tftp server
-   vsftpd
-   iperf
 
-# Setting Log folder
+- nmcli
+- ifconfig
+- iw
+- telnet
+- ssh
+- tftpd-hpa or any tftp server
+- vsftpd
+- iperf
 
-sudo mkdir -p /var/log/vi
-sudo chown -R $USER /var/log/vi
-sudo chmod 755 /var/log/vi
+# Settings
+
+1. DB creds
+
+- Provide DB creds in /config/settings.conf
+- Provide log path
+
+For Ex:
+
+```
+[DATABASE]
+DBNAME=vi
+DBHOST=localhost
+DBPORT=5432
+DBUSER=vignesh
+DBPASSWD=root
+API_URL=http://localhost:5000/
+
+[LOG]
+LOGPATH=/opt/vi/logs
+```
 
 ## Project Status
 

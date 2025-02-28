@@ -3,20 +3,23 @@ import serial
 import requests
 from time import sleep
 import re
-import threading
 import paramiko
+from munch import Munch
 
 class DUT:
 
     def __init__(self,dutdevice,serial_timeout=1.5,serial_baudrate=115200):
-        self.ssh_ip = dutdevice.wanip
-        self.ssh_user = dutdevice.hostname
+        print(dutdevice)
+        dutdevice = Munch(dutdevice)
+        self.wan_ip = dutdevice.wanip
+        self.ssh_user = dutdevice.username
         self.ssh_password = dutdevice.password
         self.ssh_port = dutdevice.sshport
         self.waniface = dutdevice.waniface
         self.serial_port = dutdevice.serial
         self.serial_baudrate = dutdevice.baudrate if dutdevice.baudrate else serial_baudrate
         self.serial_timeout = serial_timeout
+        print("Done")
 
 
     def regex_prompt(prompt_text):
@@ -30,13 +33,12 @@ class DUT:
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(hostname=self.ssh_ip,port=self.ssh_port,username=self.ssh_user,password=self.ssh_password)
+            ssh.connect(hostname=self.wan_ip,port=self.ssh_port,username=self.ssh_user,password=self.ssh_password)
             output = ''
             stdin, stdout, stderr = ssh.exec_command(DUT_command)
             if stdout:
                 for i in stdout:
                     output += i
-                print("SSH out:",output)
                 return output
             else:
                 return stderr
@@ -66,7 +68,7 @@ class DUT:
                 return e
 
     def get_and_verify(self,command,validate_method,validate_value):
-        response = self.execute_serial_command(self.serial_port,command)
+        response = self.execute_serial_command(command) if self.serial_port else self.execute_ssh_command(command) 
         response= response.strip(command)
         if validate_method == "contains" and validate_value in response:
             return "Pass"

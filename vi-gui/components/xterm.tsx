@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Terminal } from '@xterm/xterm';
+import React, { useEffect, useRef } from "react";
+import { Terminal } from "@xterm/xterm";
 //import 'xterm/css/xterm.css'; // Import xterm styles
 
 const TerminalComponent = () => {
@@ -10,8 +10,8 @@ const TerminalComponent = () => {
     const term = new Terminal({
       cursorBlink: true, // You can customize various options
       theme: {
-        background: '#000',
-        foreground: '#fff',
+        background: "#000",
+        foreground: "#fff",
       },
     });
 
@@ -20,17 +20,17 @@ const TerminalComponent = () => {
     // Attach the terminal to the DOM element
 
     // Simulate some bash command output for demonstration
-    term.writeln('Welcome to the terminal!');
-    term.writeln('Type your commands below...');
+    term.writeln("Welcome to the terminal!");
+    term.writeln("Type your commands below...");
 
     // You can use term.write() to simulate a prompt and accept user input
-    term.write('$ ');
+    term.write("$ ");
 
     // Optional: Add event listeners to handle user input and execute commands
-    term.onData(data => {
-      if (data === '\r') {
-        term.writeln('You pressed enter!');
-        term.write('$ ');
+    term.onData((data) => {
+      if (data === "\r") {
+        term.writeln("You pressed enter!");
+        term.write("$ ");
       } else {
         term.write(data);
       }
@@ -46,11 +46,11 @@ const TerminalComponent = () => {
       <div
         ref={terminalRef}
         style={{
-          height: '400px',
-          width: '100%',
-          backgroundColor: '#000',
-          color: '#fff',
-          border: '1px solid #ccc',
+          height: "400px",
+          width: "100%",
+          backgroundColor: "#000",
+          color: "#fff",
+          border: "1px solid #ccc",
         }}
       ></div>
     </div>

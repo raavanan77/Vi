@@ -8,14 +8,18 @@ import {
   ToastProvider,
   ToastTitle,
   ToastViewport,
-} from "@/components/ui/toast"
+} from "@/components/ui/toast";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/theme-provider";
 import { useState } from "react";
-import { useRouter,usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
 import { NavigationMenuDemo } from "@/components/nav-menu";
 import { ThemeToggle } from "@/components/darmode-toogle";
@@ -31,8 +35,8 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-if (geistSans&& geistMono) {
-  console.log('Active component');
+if (geistSans && geistMono) {
+  console.log("Active component");
 }
 
 //export const metadata: Metadata = {
@@ -50,11 +54,11 @@ export default function RootLayout({
   const pathname = usePathname();
 
   if (activeComponent) {
-    console.log('Active component:', activeComponent);
-}
+    console.log("Active component:", activeComponent);
+  }
   const isLoginPage = pathname === "/login";
   const handleNavItemClick = (title: string) => {
-    console.log(title)
+    console.log(title);
     setActiveComponent(title); // Update the active component
     // Navigate to corresponding route based on the sidebar item clicked
     switch (title) {
@@ -62,14 +66,14 @@ export default function RootLayout({
         router.push("/testcases");
         break;
       case "Testcase Builder":
-          router.push("/testcaseBuilder");
-          break;
+        router.push("/testcaseBuilder");
+        break;
       case "Device List":
         router.push("/devices");
         break;
-        case "DUT Profiles":
-          router.push("/devices/dutprofiles");
-          break;
+      case "DUT Profiles":
+        router.push("/devices/dutprofiles");
+        break;
       case "Documentation":
         router.push("/documentation");
         break;
@@ -81,61 +85,67 @@ export default function RootLayout({
     }
   };
 
-  const { toasts } = useToast()
+  const { toasts } = useToast();
   return (
-    
     <html lang="en">
-      <body
-      >
-      <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-      disableTransitionOnChange
-      >
-      {!isLoginPage ? (<SidebarProvider>
-        <AppSidebar onNavItemClick={handleNavItemClick}/>
-        <SidebarInset>
-        <header className="flex h-12 shrink-0 items-center gap-2 border-b">
-          <div className="flex items-center gap-2 px-3">
-            <SidebarTrigger/>
-            <NavigationMenuDemo/>
-            <ThemeToggle/>
-          </div>
-        </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-              {children}
-            </div>
-          </div>
-        </SidebarInset>
-      </SidebarProvider>) : (
-        <AuthProvider>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-          {children}
-        </div>
-      </div>
-      </AuthProvider>
-      ) }
-      <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
-        return (
-          <Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
-              {description && (
-                <ToastDescription>{description}</ToastDescription>
-              )}
-            </div>
-            {action}
-            <ToastClose />
-          </Toast>
-        )
-      })}
-      <ToastViewport />
-    </ToastProvider>
-      </ThemeProvider>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {!isLoginPage ? (
+            <SidebarProvider>
+              <AppSidebar onNavItemClick={handleNavItemClick} />
+              <SidebarInset>
+                <header className="flex h-12 shrink-0 items-center gap-2 border-b">
+                  <div className="flex items-center gap-2 px-3">
+                    <SidebarTrigger />
+                    <NavigationMenuDemo />
+                    <ThemeToggle />
+                  </div>
+                </header>
+                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                  <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+                    {children}
+                  </div>
+                </div>
+              </SidebarInset>
+            </SidebarProvider>
+          ) : (
+            <AuthProvider>
+              <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+                  {children}
+                </div>
+              </div>
+            </AuthProvider>
+          )}
+          <ToastProvider>
+            {toasts.map(function ({
+              id,
+              title,
+              description,
+              action,
+              ...props
+            }) {
+              return (
+                <Toast key={id} {...props}>
+                  <div className="grid gap-1">
+                    {title && <ToastTitle>{title}</ToastTitle>}
+                    {description && (
+                      <ToastDescription>{description}</ToastDescription>
+                    )}
+                  </div>
+                  {action}
+                  <ToastClose />
+                </Toast>
+              );
+            })}
+            <ToastViewport />
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

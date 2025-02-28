@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,21 +12,21 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { TestMethod } from "@/types/testcaseTypes"
+} from "@/components/ui/popover";
+import { TestMethod } from "@/types/testcaseTypes";
 
 interface frameworks {
-    value: string
-    label: string
+  value: string;
+  label: string;
 }
 
-const ComboMenu: React.FC<frameworks> = ({params} : any) => {
-  const [open, setOpen] = React.useState(false)
+const ComboMenu: React.FC<frameworks> = ({ params }: any) => {
+  const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<frameworks[]>([]);
 
   return (
@@ -38,9 +38,7 @@ const ComboMenu: React.FC<frameworks> = ({params} : any) => {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-         {value
-            ? params.label
-            : "Select framework..."}
+          {value ? params.label : "Select framework..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -50,20 +48,20 @@ const ComboMenu: React.FC<frameworks> = ({params} : any) => {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {params.map((params : any) => (
+              {params.map((params: any) => (
                 <CommandItem
                   key={params.value}
                   value={params.value}
                   onSelect={(currentValue) => {
                     //setValue(currentValue)
-                    setOpen(false)
+                    setOpen(false);
                   }}
                 >
                   {params.label}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === params.value ? "opacity-100" : "opacity-0"
+                      value === params.value ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>
@@ -73,7 +71,7 @@ const ComboMenu: React.FC<frameworks> = ({params} : any) => {
         </Command>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
 export { ComboMenu };

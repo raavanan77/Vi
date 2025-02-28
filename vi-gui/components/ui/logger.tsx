@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const LogDisplay = () => {
-  const [logs, setLogs] = useState('');
+  const [logs, setLogs] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {
     // Function to fetch logs from the backend
     const fetchLogs = () => {
-      fetch('http://192.168.0.104:8000/api/logs/')
+      fetch("http://192.168.0.104:8000/api/logs/")
         .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to fetch logs');
+            throw new Error("Failed to fetch logs");
           }
           return response.json();
         })
@@ -18,7 +18,7 @@ const LogDisplay = () => {
           if (data.logs) {
             setLogs(data.logs); // Update the logs state
           } else {
-            setError(data.error || 'Unknown error');
+            setError(data.error || "Unknown error");
           }
         })
         .catch((error) => {

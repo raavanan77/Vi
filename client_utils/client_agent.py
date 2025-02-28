@@ -4,9 +4,11 @@ from werkzeug.serving import run_simple
 import logging
 from jsonrpc import JSONRPCResponseManager, dispatcher
 from time import sleep
-import jsonrpc
 
 exe_status = ">> /dev/null && echo \"SUCCESS\" || echo \"FAILURE\""
+
+logger = logging.getLogger('__name__')
+logging.basicConfig('clientlog.log',encoding='utf-8',level=logging.DEBUG)
 
 @dispatcher.add_method
 def foobar(**kwargs):
@@ -15,9 +17,9 @@ def foobar(**kwargs):
 def execute_command(command):       
     if command:
         # Run the command and get the output
-        print(f"Execute Command : {command}")
+        logger.info(f"Execute Command : {command}")
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        print(f"Output : {result.stdout}")
+        logger.info(f"Output : {result.stdout}")
         return result.stdout.strip('\n')  #.decode('utf-8', errors='ignore')
     else:
         return result.stderr
@@ -67,7 +69,7 @@ def disconnect_wifi(iface):
 def get_ipv4addr(iface):
     #Returns IP address of given Interface
     awk = "awk \'{print $2}\'"
-    ip = execute_command(f"ifconfig {iface} | grep \'inet \' | {awk}" )
+    ip = execute_command(f"ifconfig {iface} | grep \'inet \' | {awk}")
     return ip
 
 def get_subnetmask(iface):
@@ -140,7 +142,7 @@ def refresh_interface(iface):
 @Request.application
 def application(request):
     # Dispatcher is dictionary {<method_name>: callable}
-    print(request.data)
+    logger.info(request.data)
     dispatcher["cmd"] = execute_command
     dispatcher["refresh_wifinw"] = refresh_wifinw
     dispatcher["is_ssid_available"] = is_ssid_available

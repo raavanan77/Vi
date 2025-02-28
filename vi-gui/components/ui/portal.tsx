@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as PortalPrimitive from "@radix-ui/react-portal"
+import * as PortalPrimitive from "@radix-ui/react-portal";
 
-const Portal = PortalPrimitive.Root
+const Portal = PortalPrimitive.Root;
 
-export { Portal }
+export { Portal };

@@ -1,5 +1,4 @@
 import yaml
-import json
 
 def yamlParser(filename):
     with open(filename) as stream:

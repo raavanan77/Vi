@@ -7,8 +7,8 @@ import configparser
 from munch import Munch
 import threading
 import queue
-from core.models import DeviceHandler,TestcaseHandler
-from ..api.serializer import DeviceSerializer, TestCaseSerializer
+from core.models import TestcaseHandler,DeviceMapper, DUTHandler
+from ..api.serializer import TestCaseSerializer, DeviceMapperSerializer, DutSerializer
 
 # Queueing jobs
 bee = queue.Queue()
@@ -26,22 +26,15 @@ threads = []
 
 
 def TestCaseExecutor(data):
-    testcase = Munch(data)
-    testcaseObj = TestcaseHandler.objects.get(testcasename=testcase.Testcase)
-    #testDetails = TestCaseSerializer(testcaseObj).data
-    DUT = DeviceHandler.objects.get(devicename=testcase.Device)
-    #DUT = DeviceSerializer(DUT).data
-    print("Testcase Details",testcaseObj.testcasename)
-    print("DUT: ",DeviceSerializer(DUT).data)
+    data = Munch(data)
+    testcaseObj = TestcaseHandler.objects.get(testcasename=data.Testcase)
+    profile = DeviceMapper.objects.get(profilename=data.profile)
+    testcaseObj = TestCaseSerializer(testcaseObj)
+    profile = DeviceMapperSerializer(profile)
     ini_worker(3)
-    add_work("testcase",testcaseObj,DUT)
-    pass
-
+    add_work("testcase",testcaseObj,profile)
 
 testcase_path = 'testcases/'
-def dyno_vars(key,value):
-    #create variables to use in between the test steps
-    temp_vars[key] = value
 
 def logAgent(testcase):
     logger = logging.getLogger(__name__)
@@ -62,39 +55,29 @@ def logAgent(testcase):
 
 #Test case Executor
 def executor(testcase,DUT,testsuite=False):
-    print("Exec Called")
-    try:
-        DUTobj = vilib.DUT(DUT)
-    except Exception as e:
-        print(e)
-    logger = logAgent(testcase=testcase)
+    testcase = Munch(testcase.data)
+
+    DUT = DUTHandler.objects.get(name=DUT.data['dut_id']['name'])
+    DUT = DutSerializer(DUT)
+    DUTobj = vilib.DUT(DUT.data)
+    #logger = logAgent(testcase=testcase)
     for test in testcase.testcasedetails:
-        
-        func_param = testcase.testcasedetails[test]['param']
-        func = getattr(DUTobj,testcase.testcasedetails[test]['method'])
-        func()
-        try:
-            target_device = testcase.testcasedetails[test]['target']
-            if target_device == 'DUT':
-                device = DUT
-                if "ssh" in func.__name__:
-                    func_param = [device.wanip,device.hostname,device.password,testcase.testcasedetails[test]['param']]
-            else:
-                device = "http://192.168.0.104:7777/jsonrpc" #DUT.rpcurl
-                func_param = [device,"cmd",[testcase.testcasedetails[test]['param']]] #Need some changes here
-            
-            #testcase.testcasedetails[test]['param'][0] = device[3]
-        except Exception as e:
-            print(e)
+        step = testcase.testcasedetails[test]
+        func_param = step['param']
+        func = getattr(DUTobj,step['method'])
+        #func()
         print(func.__name__,func_param)
-        result = func(*func_param)
-        print("Result",result)
-        #logger.info(f"{testcase.testcasedetails[test]['description']} : {result}")
         try:
-            if testcase.testcasedetails[test]['savevar']:
-                dyno_vars(testcase.testcasedetails[test]['savevar'],result)
+            result = func(func_param)
+            print("Result :",result)
+        except Exception as e:
+            print("Exception :",e)
+        #logger.info(f"{step['description']} : {result}")
+        try:
+            if step['savevar']:
+                pass    #dyno_vars(step['savevar'],result)
         except:
-            print("No variable to save")
+            pass #print("No variable to save")
     return 'OK'
 
 #Testsuite parser
@@ -119,7 +102,6 @@ def worker():
         work_type, args = worker_bee
         try:
             if work_type == 'testcase':
-                print("Testcase args",args)
                 executor(**args)
             elif work_type == 'testsuite':
                 testsuite(**args)
@@ -143,10 +125,8 @@ def stop_worker(threads):
         t.join()
 
 #Adding jobs to the queue
-def add_work(work_type,testcase,dut):
+def add_work(work_type,testcase,profile):
     if work_type == 'testsuite':
         bee.put((work_type,{"xml":testcase}))
     else:
-        print("HELLO")
-        bee.put((work_type,{"testcase":testcase,"DUT":dut}))
-        print("Work Added")
+        bee.put((work_type,{"testcase":testcase,"DUT":profile}))

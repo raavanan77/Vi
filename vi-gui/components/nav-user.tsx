@@ -1,16 +1,8 @@
-"use client"
+"use client";
 
-import {
-  BadgeCheck,
-  ChevronsUpDown,
-  LogOut,
-} from "lucide-react"
+import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,45 +10,45 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { useCallback } from "react"
-import axiosInstance from "@/lib/axios"
-import { useRouter } from "next/navigation"
-import { toast } from '@/hooks/use-toast';
+} from "@/components/ui/sidebar";
+import { useCallback } from "react";
+import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
   const router = useRouter();
   const handleLogout = useCallback(async () => {
     try {
-      await axiosInstance.post('/auth/logout/');
-      router.push('/login');
+      await axiosInstance.post("/auth/logout/");
+      router.push("/login");
       toast({
         title: "Success",
-        description: "Logged out successfully"
+        description: "Logged out successfully",
       });
     } catch (error) {
       toast({
         title: "Error",
         description: "Logout failed",
-        variant: "destructive"
+        variant: "destructive",
       });
     }
   }, [router]);
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
 
   return (
     <SidebarMenu>
@@ -96,10 +88,10 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
+            <DropdownMenuItem>
+              <BadgeCheck />
+              Account
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
@@ -109,5 +101,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

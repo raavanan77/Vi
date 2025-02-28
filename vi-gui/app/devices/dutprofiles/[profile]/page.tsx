@@ -1,7 +1,5 @@
 import AddDUTProfile from "./AddDUTProfile";
 
-export default function Page(){
-    return(
-        <AddDUTProfile/>
-    )
+export default function Page() {
+  return <AddDUTProfile />;
 }

@@ -10,7 +10,7 @@ interface InputDemoProps {
 }
 
 export default function InputDemo({ tags }: InputDemoProps) {
-  const [exampleTags, setExampleTags] = useState<Tag[]>([]); 
+  const [exampleTags, setExampleTags] = useState<Tag[]>([]);
   const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null);
 
   useEffect(() => {

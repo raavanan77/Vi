@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,11 +12,11 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
-import { getDropDownValues } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { getDropDownValues } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -25,8 +25,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -34,34 +34,34 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { useEffect, useState } from "react"
-import { DataTableFacetedFilter } from "@/components/ui/facted-filter"
-import { DataTablePagination } from "@/components/page-control"
-import { Separator } from "@/components/ui/separator"
-import { useRouter } from "next/navigation"
-import { Label } from "@/components/ui/label"
-import { deletedev, deleteTestcase, fetchclientdev } from "@/app/api"
-import { toast } from "@/hooks/use-toast"
-import Link from "next/link"
+} from "@/components/ui/table";
+import { useEffect, useState } from "react";
+import { DataTableFacetedFilter } from "@/components/ui/facted-filter";
+import { DataTablePagination } from "@/components/page-control";
+import { Separator } from "@/components/ui/separator";
+import { useRouter } from "next/navigation";
+import { Label } from "@/components/ui/label";
+import { deletedev, deleteTestcase, fetchclientdev } from "@/app/api";
+import { toast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 export type Device = {
   name: string;
   platform: string;
   wanip: string;
   devtype: string;
-}
+};
 
 export default function DeviceDataTable() {
   const router = useRouter();
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [data,setData] = useState<Device[]>([]);
+  const [data, setData] = useState<Device[]>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+    [],
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
   const columns: ColumnDef<Device>[] = [
     {
       id: "select",
@@ -103,14 +103,18 @@ export default function DeviceDataTable() {
             Platform
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
-      cell: ({ row }) => <div className="uppercase">{row.getValue("platform")}</div>,
+      cell: ({ row }) => (
+        <div className="uppercase">{row.getValue("platform")}</div>
+      ),
     },
     {
-        accessorKey: "wanip",
-        header: "WAN IP",
-        cell: ({ row }) => <div className="lowercase">{row.getValue("wanip")}</div>,
+      accessorKey: "wanip",
+      header: "WAN IP",
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("wanip")}</div>
+      ),
     },
     {
       accessorKey: "devtype",
@@ -123,38 +127,41 @@ export default function DeviceDataTable() {
             Device Type
             <ArrowUpDown />
           </Button>
-        )
+        );
       },
-      cell: ({ row }) => <div className="uppercase">{row.getValue("devtype")}</div>,
+      cell: ({ row }) => (
+        <div className="uppercase">{row.getValue("devtype")}</div>
+      ),
     },
     {
       id: "actions",
       header: "Actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const device = row.original
+        const device = row.original;
         const handleAction = (action: string) => {
-          const devicetype = device.devtype.toLowerCase()
+          const devicetype = device.devtype.toLowerCase();
           switch (action) {
             case "edit":
-              router.push(`/devices/${devicetype}/${device.name}`)
-              break
+              router.push(`/devices/${devicetype}/${device.name}`);
+              break;
             case "delete":
-              const response = deletedev(device,devicetype,device.name);
+              const response = deletedev(device, devicetype, device.name);
               if (!response) {
                 throw new Error("No response");
-              }
-              else{
-                setData(prevData => prevData.filter(item => item.name !== device.name));
+              } else {
+                setData((prevData) =>
+                  prevData.filter((item) => item.name !== device.name),
+                );
                 toast({
-                  title: 'Device Deleted',
-                })
+                  title: "Device Deleted",
+                });
               }
-              break
+              break;
             default:
-              break
+              break;
           }
-        }
+        };
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -172,11 +179,11 @@ export default function DeviceDataTable() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )
+        );
       },
     },
-  ]
-  
+  ];
+
   const table = useReactTable({
     data,
     columns,
@@ -194,47 +201,48 @@ export default function DeviceDataTable() {
       columnVisibility,
       rowSelection,
     },
-  })
-    const [loading, setLoading] = useState(true);
-  
-    const fetchData = async () => {
+  });
+  const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
     setLoading(true);
     try {
       const response = await fetchclientdev("client");
       const dutresponse = await fetchclientdev("dut");
       const result = await response;
       const dutresult = await dutresponse;
-      console.log(result,dutresult)
+      console.log(result, dutresult);
       if (Array.isArray(result) && Array.isArray(dutresult)) {
-        const devices : Device[] = [
+        const devices: Device[] = [
           ...result.map((device) => ({
-            name: device.devicename,
-            platform: device.deviceplatform,
+            name: device.name,
+            platform: device.platform,
             wanip: device.wanip,
             devtype: "Client",
           })),
           ...dutresult.map((device) => ({
-            name: device.dutname,
-            platform: device.dutplatform,
+            name: device.name,
+            platform: device.platform,
             wanip: device.wanip,
             devtype: "DUT",
-          }))];
-            setData(devices);
-          console.log(data)           
-        } else {
-          console.error("Unexpected response format", result);
-          setData([]);
-        }
-      } catch (err) {
-        console.error("Failed to fetch data:", err);
-      } finally {
-        setLoading(false);
+          })),
+        ];
+        setData(devices);
+        console.log(data);
+      } else {
+        console.error("Unexpected response format", result);
+        setData([]);
       }
-    };
-  
-      useEffect(() => {
-          fetchData();
-      }, []);
+    } catch (err) {
+      console.error("Failed to fetch data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="p-4 w-full">
@@ -247,37 +255,37 @@ export default function DeviceDataTable() {
           }
           className="max-w-sm"
         />
-        <Separator orientation="vertical" className="my-4"/>
+        <Separator orientation="vertical" className="my-4" />
         <div className="flex-1 space-x-2">
-          {table.getColumn("platform") &&(
+          {table.getColumn("platform") && (
             <DataTableFacetedFilter
-            column={table.getColumn("platform")}
-            title="platform"  
-            options={getDropDownValues(data, "platform")}/>
+              column={table.getColumn("platform")}
+              title="platform"
+              options={getDropDownValues(data, "platform")}
+            />
           )}
           {table.getColumn("devtype") && (
             <DataTableFacetedFilter
-            column={table.getColumn("devtype")}
-            title="devtype"  
-            options={getDropDownValues(data, "devtype")}/>
+              column={table.getColumn("devtype")}
+              title="devtype"
+              options={getDropDownValues(data, "devtype")}
+            />
           )}
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-            <Button className="ml-auto items-end" >
-                Add Device
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <Link href="/devices/client/new">Client</Link>
-                </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/devices/dut/new">DUT</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-         
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button className="ml-auto items-end">Add Device</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <Link href="/devices/client/new">Client</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/devices/dut/new">DUT</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -300,7 +308,7 @@ export default function DeviceDataTable() {
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -317,10 +325,10 @@ export default function DeviceDataTable() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -336,7 +344,7 @@ export default function DeviceDataTable() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -359,6 +367,6 @@ export default function DeviceDataTable() {
         <DataTablePagination table={table} />
         {table.getFilteredSelectedRowModel().rows.length > 0}
       </div>
-</div>
-  )
+    </div>
+  );
 }

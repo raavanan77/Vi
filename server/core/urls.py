@@ -16,10 +16,6 @@ Including another URLconf
 """
 from django.urls import path
 from .api import views
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
 urlpatterns = [
     path('testcase/get/',views.getTestCase,name='getAllTestcase'),
@@ -30,5 +26,9 @@ urlpatterns = [
     path('device/add/<str:devtype>/',views.addDevice,name='Add_Device'),
     path('device/edit/<str:devtype>/<str:devname>/',views.editDevice,name='Edit_Device'),
     path('device/get/<str:devtype>/',views.getDevice,name='Get_Device'),
-    path('device/client/type/',views.addclienttype,name='Add_clienttype')
+    path('device/client/type/',views.addclienttype,name='Add_clienttype'),
+    path('device/client/type/get/',views.getclienttype,name='Get_clienttype'),
+    path('dut/profile/add/',views.adddutprofile,name='Add_DUTProfile'),
+    path('dut/profile/get/',views.getdutprofile,name='Get_DUTProfile'),
+    path('dut/profile/delete/<str:profilename>/',views.deleteDUTProfile,name='Edit_DUTProfile'),
 ]

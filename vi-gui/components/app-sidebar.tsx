@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
   BookOpen,
   Bot,
@@ -9,10 +9,10 @@ import {
   Settings2,
   SquareTerminal,
   WaypointsIcon,
-} from "lucide-react"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+} from "lucide-react";
+import { NavMain } from "@/components/nav-main";
+import { NavSecondary } from "@/components/nav-secondary";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -24,12 +24,11 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-
 const data = {
   user: {
     name: "raavanan",
     email: "",
-    avatar: "/evvi.png",
+    avatar: "https://github.com/raavanan77/Vi/blob/master/vi-gui/components/evvi.png?raw=true",
   },
   navMain: [
     {
@@ -51,7 +50,8 @@ const data = {
         {
           title: "Device List",
           url: "/devices",
-        },{
+        },
+        {
           title: "DUT Profiles",
           url: "/devices/dutprofiles",
         },
@@ -89,13 +89,14 @@ const data = {
       icon: LogOut,
     },
   ],
-}
+};
 
 export function AppSidebar({
   onNavItemClick,
   ...props
-}: { onNavItemClick: (title: string) => void } & React.ComponentProps<typeof Sidebar>) {
-
+}: { onNavItemClick: (title: string) => void } & React.ComponentProps<
+  typeof Sidebar
+>) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -104,10 +105,13 @@ export function AppSidebar({
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src='https://nextjs.org/icons/next.svg' alt='logo' />
-                  <AvatarFallback className="rounded-lg">Vi</AvatarFallback>
-                </Avatar>
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage
+                      src="https://github.com/raavanan77/Vi/blob/master/vi-gui/components/evvi.png?raw=true"
+                      alt="logo"
+                    />
+                    <AvatarFallback className="rounded-lg">Vi</AvatarFallback>
+                  </Avatar>
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">Vi</span>
@@ -126,5 +130,5 @@ export function AppSidebar({
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

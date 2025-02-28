@@ -1,8 +1,11 @@
-export default function Dashboard() {
+"use client"
+import { Card } from "@/components/ui/card";
+import TestcaseExecutor from "../testcases/testcaseExecutor";
 
+export default function Page() {
   return (
-    <>
-      <h1>Hi</h1>
-    </>
+    <Card className="w-full">
+      <TestcaseExecutor params={"OpenWRT"}/>
+    </Card>
   );
 }

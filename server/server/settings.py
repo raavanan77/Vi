@@ -54,11 +54,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'graphene_django',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework.authtoken',
     'core',
-    'drf_yasg',
+    #'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -159,14 +160,21 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#CORS Settings
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = False  # Change to True in production
 SESSION_COOKIE_SECURE = False  # Change to True in production
 
+#JWT Config
 SIMPLE_JWT = {
      'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
      'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
      'ROTATE_REFRESH_TOKENS': True,
      'BLACKLIST_AFTER_ROTATION': True
+}
+
+#Schema location
+GRAPHENE = {
+    "SCHEMA": "core.schema.schema"
 }

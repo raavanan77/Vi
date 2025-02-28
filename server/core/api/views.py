@@ -1,10 +1,9 @@
-from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from ..core_utils.core import TestCaseExecutor
-from ..models import TestcaseHandler,DeviceHandler,ClientType,DUTHandler
-from .serializer import TestCaseSerializer,DeviceSerializer,DutSerializer,ClientTypeSerializer
+from ..models import TestcaseHandler,DeviceHandler,ClientModel,DUTHandler, DeviceMapper
+from .serializer import TestCaseSerializer,DeviceSerializer,DutSerializer,ClientTypeSerializer,DeviceMapperSerializer,SetDeviceMapperSerializer
 
 @api_view(['GET'])
 def getTestCase(request):
@@ -12,7 +11,7 @@ def getTestCase(request):
         testcase = TestcaseHandler.objects.all()
         casename = TestCaseSerializer(testcase, many=True)
         return Response(casename.data)
-    except TestcaseHandler.DoesNotExist as e:
+    except TestcaseHandler.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
@@ -27,19 +26,20 @@ def createTestcase(request):
 
 @api_view(['PUT','GET','DELETE'])
 def TestcaseEditor(request,tcname):
+
     try:
         testcase = TestcaseHandler.objects.get(testcasename=tcname)
-    except TestcaseHandler.DoesNotExist as e:
+    except TestcaseHandler.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
     if request.method == 'GET':
         serialzer = TestCaseSerializer(testcase)
         return Response(serialzer.data)
-    if request.method == 'PUT':
+    elif request.method == 'PUT':
         serialzer = TestCaseSerializer(testcase, data=request.data)
         if serialzer.is_valid():
             serialzer.save()
         return Response(status=status.HTTP_200_OK)
-    
     elif request.method == 'DELETE':
         testcase.delete()
         return Response(status=status.HTTP_200_OK)
@@ -52,15 +52,18 @@ def gettestcaseNames(request,tcname):
         testcase = TestcaseHandler.objects.filter(testplatform=tcname)
         casename = TestCaseSerializer(testcase, many=True)
         return Response(casename.data)
-    except TestcaseHandler.DoesNotExist as e:
+    except TestcaseHandler.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
 
 @api_view(['POST'])
 def executeTestcase(request):
-    if request.method == 'POST':
-        TestCaseExecutor(data=request.data)
-    return Response(status=status.HTTP_200_OK)
+    try:
+        if request.method == 'POST':
+            TestCaseExecutor(data=request.data)
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['POST'])
@@ -75,7 +78,7 @@ def addDevice(request,devtype):
 
 @api_view(['GET','PUT','DELETE'])
 def editDevice(request,devtype,devname):
-    device = DeviceHandler.objects.get(devicename=devname) if devtype == 'client' else DUTHandler.objects.get(dutname=devname)
+    device = DeviceHandler.objects.get(name=devname) if devtype == 'client' else DUTHandler.objects.get(name=devname)
     if request.method == 'GET':
         device = DeviceSerializer(device) if devtype == 'client' else DutSerializer(device)
         return Response(device.data)
@@ -99,10 +102,45 @@ def getDevice(request,devtype):
     
 @api_view(['POST'])
 def addclienttype(request):
-    print(request.method)
     if request.method == 'POST':
-        print(request.data)
         ctype = ClientTypeSerializer(data=request.data)
         if ctype.is_valid():
             ctype.save()
             return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def getclienttype(request):
+    try:
+        clist = ClientModel.objects.all()
+        client = ClientTypeSerializer(clist, many=True)
+        return Response(client.data)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['POST'])
+def adddutprofile(request):
+    if request.method == 'POST':
+        ctype = SetDeviceMapperSerializer(data=request.data)
+        if ctype.is_valid():
+            ctype.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+@api_view(['GET'])
+def getdutprofile(request):
+    try:
+        clist = DeviceMapper.objects.all()
+        client = DeviceMapperSerializer(clist, many=True)
+        return Response(client.data)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['DELETE'])
+def deleteDUTProfile(request,profilename):
+    try:
+        dev = DeviceMapper.objects.get(profilename=profilename)
+        dev.delete()
+        return Response(status=status.HTTP_200_OK)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)

@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from ..models import TestcaseHandler,DeviceHandler,DeviceMapper,DUTHandler,ClientType
+from ..models import TestcaseHandler,DeviceHandler,DeviceMapper,DUTHandler,ClientModel, TestcaseRepo
+
+class TestcaseRepoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestcaseRepo
+        fields = '__all__'
 
 class TestCaseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -11,17 +16,52 @@ class DeviceSerializer(serializers.ModelSerializer):
         model = DeviceHandler
         fields = '__all__'
 
-class DeviceMapperSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DeviceMapper
-        fields = '__all__'
+    def to_representation(self, instance):
+        return super().to_representation(instance)
 
 class DutSerializer(serializers.ModelSerializer):
     class Meta:
         model = DUTHandler
         fields = '__all__'
+    
+    def to_representation(self, instance):
+        return super().to_representation(instance)
 
 class ClientTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ClientType
+        model = ClientModel
         fields = '__all__'
+
+class DUTProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DUTHandler
+        fields = ['name','wanip','platform']
+
+class DeviceProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DeviceHandler
+        fields = ['name','wanip','platform']
+
+class DeviceMapperSerializer(serializers.ModelSerializer):
+    dut_id = DUTProfileSerializer()
+    clientslist = DeviceProfileSerializer(many=True)
+    clientIdlist = ClientTypeSerializer(many=True)
+
+    class Meta:
+        model = DeviceMapper
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        return super().to_representation(instance)
+    
+class SetDeviceMapperSerializer(serializers.ModelSerializer):
+    dut_id = serializers.PrimaryKeyRelatedField(queryset=DUTHandler.objects.all())
+    clientslist = serializers.PrimaryKeyRelatedField(queryset=DeviceHandler.objects.all(), many=True)
+    clientIdlist = serializers.PrimaryKeyRelatedField(queryset=ClientModel.objects.all(), many=True)
+
+    class Meta:
+        model = DeviceMapper
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        return super().to_representation(instance)

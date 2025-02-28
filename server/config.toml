@@ -1,0 +1,30 @@
+[DATABASE]
+DBNAME = "vi"
+DBHOST = "localhost"
+DBPORT = 5432
+DBUSER = "vignesh"
+DBPASSWD = "root"
+API_URL = "http://localhost:5000/"
+
+[LOG]
+LOGPATH = "/opt/vi/logs"
+
+[CLIENT_METHODS]
+FUNC = [
+    "execute_command",
+    "refresh_wifinw",
+    "is_ssid_available",
+    "connect_to_ssid",
+    "disconnect_wifi",
+    "get_connected_ssid",
+    "get_ipv4addr",
+    "get_subnetmask",
+    "get_macaddr",
+    "get_channelno",
+    "get_bitrate",
+    "get_security_mode",
+    "bring_interface_down",
+    "bring_interface_up",
+    "ping",
+    "curl",
+]

@@ -1,0 +1,4 @@
+interface:
+  up: "sudo ifconfig {iface} up {exe_status}"
+  down: "sudo ifconfig {iface} down {exe_status}"
+  get_ip: "ifconfig {iface} | grep \'inet \' | {awk}"

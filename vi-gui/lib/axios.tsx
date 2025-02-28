@@ -1,9 +1,9 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
-  headers: {    
-    'Content-Type': 'application/json',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+  headers: {
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 };
@@ -13,10 +13,12 @@ const axiosInstance = axios.create(config);
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
+    const originalRequest = error.config as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
 
     // Prevent infinite loop if the refresh token request fails
-    if (originalRequest.url?.includes('/auth/refresh')) {
+    if (originalRequest.url?.includes("/auth/refresh")) {
       return Promise.reject(error);
     }
 
@@ -27,7 +29,7 @@ axiosInstance.interceptors.response.use(
         const response = await axios.post(
           `http://localhost:8000/auth/refresh`,
           {},
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         if (response.status === 200) {
@@ -36,18 +38,22 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         // Logout on refresh failure
         try {
-          await axios.post(`http://localhost:8000/auth/logout`, {}, { withCredentials: true });
+          await axios.post(
+            `http://localhost:8000/auth/logout`,
+            {},
+            { withCredentials: true },
+          );
         } catch (logoutError) {
           console.error("Logout request failed:", logoutError);
         }
-        
-        window.location.href = '/login';
+
+        window.location.href = "/login";
         return Promise.reject(refreshError);
       }
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;
