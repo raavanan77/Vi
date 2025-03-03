@@ -123,8 +123,8 @@ const TestcaseExecutor: React.FC<MultipleSelectorControlledProps> = ({
 
   return (
     <Form {...form}>
-      <Label>Test Case Executor</Label>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <Label className="p-2">Test Case Executor</Label>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 p-4 ">
         <FormField
           control={form.control}
           name="selectDevice"
@@ -139,7 +139,7 @@ const TestcaseExecutor: React.FC<MultipleSelectorControlledProps> = ({
                     field.onChange(value);
                   }}
                 >
-                  <SelectTrigger className="w-1/3">
+                  <SelectTrigger className="w-full p-4">
                     <SelectValue placeholder="Select Device" />
                   </SelectTrigger>
                   <SelectContent>
@@ -171,11 +171,11 @@ const TestcaseExecutor: React.FC<MultipleSelectorControlledProps> = ({
                   {...field}
                   options={value}
                   defaultOptions={OPTIONS}
-                  className="w-2/3 space-y-6"
+                  className="w-full"
                   placeholder="Select Test Script"
                   hidePlaceholderWhenSelected
                   emptyIndicator={
-                    <p className="w-2/3 space-y-6">no results found.</p>
+                    <p className="w-full">no results found.</p>
                   }
                 />
               </FormControl>

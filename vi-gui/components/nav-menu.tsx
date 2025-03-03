@@ -13,6 +13,16 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { ThemeToggle } from "./darmode-toogle";
+import { NavUser } from "./nav-user";
+
+const data = {
+  user: {
+    name: "raavanan",
+    email: "",
+    avatar: "https://github.com/raavanan77/Vi/blob/master/vi-gui/components/evvi.png?raw=true",
+  },
+}
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -52,10 +62,10 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 
-export function NavigationMenuDemo() {
+export function NavMenu() {
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className="flex items-center w-full">
         <NavigationMenuItem>
           <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -111,6 +121,10 @@ export function NavigationMenuDemo() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
+        <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle/>
+          <NavUser user={data.user}/>
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );

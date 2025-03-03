@@ -216,7 +216,7 @@ export default function TestcaseDataTable() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full p-2">
       <Card className="p-2">
         <CardHeader className="flex flex-row items-left">
           <CardTitle>Testcase</CardTitle>

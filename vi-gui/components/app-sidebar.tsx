@@ -2,11 +2,11 @@ import * as React from "react";
 import {
   BookOpen,
   Bot,
-  Home,
+  FileTerminal,
   icons,
   LogOut,
   Router,
-  Settings2,
+  Settings,
   SquareTerminal,
   WaypointsIcon,
 } from "lucide-react";
@@ -25,19 +25,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const data = {
-  user: {
-    name: "raavanan",
-    email: "",
-    avatar: "https://github.com/raavanan77/Vi/blob/master/vi-gui/components/evvi.png?raw=true",
-  },
   navMain: [
     {
-      title: "Home",
+      title: "Test Script",
       url: "#",
-      icon: Home,
+      icon: FileTerminal,
       items: [
         {
-          title: "Testcase",
+          title: "Scripts",
           url: "/testcases",
         },
       ],
@@ -45,7 +40,7 @@ const data = {
     {
       title: "Devices",
       url: "/devices",
-      icon: Bot,
+      icon: Router,
       items: [
         {
           title: "Device List",
@@ -60,7 +55,7 @@ const data = {
     {
       title: "Settings",
       url: "#",
-      icon: Settings2,
+      icon: Settings,
       items: [
         {
           title: "System Config",
@@ -82,11 +77,6 @@ const data = {
       title: "API Docs",
       url: "/docs/api",
       icon: WaypointsIcon,
-    },
-    {
-      title: "Logout",
-      url: "",
-      icon: LogOut,
     },
   ],
 };
@@ -127,7 +117,7 @@ export function AppSidebar({
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        
       </SidebarFooter>
     </Sidebar>
   );

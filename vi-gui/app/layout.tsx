@@ -21,8 +21,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { useToast } from "@/hooks/use-toast";
-import { NavigationMenuDemo } from "@/components/nav-menu";
-import { ThemeToggle } from "@/components/darmode-toogle";
+import { NavMenu } from "@/components/nav-menu";
 import { AuthProvider } from "@/contexts/Authcontext";
 
 const geistSans = localFont({
@@ -99,14 +98,13 @@ export default function RootLayout({
             <SidebarProvider>
               <AppSidebar onNavItemClick={handleNavItemClick} />
               <SidebarInset>
-                <header className="flex h-12 shrink-0 items-center gap-2 border-b">
-                  <div className="flex items-center gap-2 px-3">
-                    <SidebarTrigger />
-                    <NavigationMenuDemo />
-                    <ThemeToggle />
-                  </div>
-                </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+              <header className="flex h-12 shrink-0 items-center gap-2 border-b justify-between px-3">
+                <div className="flex items-center gap-2">
+                  <SidebarTrigger />
+                  <NavMenu />
+                </div>
+              </header>
+                <div className="flex flex-1 flex-col gap-4 pt-0">
                   <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
                     {children}
                   </div>
