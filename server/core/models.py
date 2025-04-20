@@ -24,6 +24,7 @@ class BaseDevice(models.Model):
     name = models.CharField(max_length=50,unique=True)
     username = models.CharField(max_length=200)
     password = models.CharField(max_length=200,blank=True,null=True)
+    status = models.CharField(max_length=15,null=False)
     wanip = models.CharField(max_length=200)
     waniface = models.CharField(max_length=20,blank=True,null=True)         # Wan interface name Ex: eth0, eth1, etc...
     laniface = models.CharField(max_length=20,blank=True,null=True)         # Lan interface name

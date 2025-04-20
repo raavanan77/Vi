@@ -61,7 +61,7 @@ export default function RootLayout({
     setActiveComponent(title); // Update the active component
     // Navigate to corresponding route based on the sidebar item clicked
     switch (title) {
-      case "Testcase":
+      case "Scripts":
         router.push("/testcases");
         break;
       case "Testcase Builder":

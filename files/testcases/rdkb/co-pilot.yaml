@@ -1,9 +1,0 @@
-deviceName: LINUX
-deviceType: RDK-B
-testStep:
-  step1:
-    description: Sleep for 10 seconds
-    method: exesleep
-    param:
-    - 10
-testcaseName: Pilot77
