@@ -1,0 +1,9 @@
+.clienttable {
+    background-color: rgb(241, 241, 241);
+    border-color: grey;
+    border-radius: 3px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
